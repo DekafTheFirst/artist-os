@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { AssemblyAI } from "assemblyai";
 import { GoogleGenAI } from "@google/genai";
 import { SAMPLE_RAW_LYRICS } from "@/lib/data";
+import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
 
 const assembly = new AssemblyAI({
   apiKey: process.env.ASSEMBLYAI_API_KEY!,
 });
 
 const ai = new GoogleGenAI({});
+const client = new ElevenLabsClient();
 
 export async function POST(req: NextRequest) {
   const contentType = req.headers.get("content-type") || "";

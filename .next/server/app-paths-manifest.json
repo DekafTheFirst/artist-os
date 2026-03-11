@@ -1,4 +1,0 @@
-{
-  "/api/ai/route": "app/api/ai/route.js",
-  "/(shell)/aistudio/page": "app/(shell)/aistudio/page.js"
-}

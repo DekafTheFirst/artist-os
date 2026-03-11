@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils";
 const NAV_ITEMS: { id: NavItem; label: string; icon: React.ElementType }[] = [
   { id: "dashboard",   label: "Dashboard",    icon: LayoutDashboard },
   { id: "analytics",   label: "Analytics",    icon: BarChart2 },
-  { id: "playlisting", label: "Playlisting",  icon: ListMusic },
   { id: "aistudio",    label: "AI Studio",    icon: Cpu },
+  { id: "playlisting", label: "Playlisting",  icon: ListMusic },
   { id: "distro",      label: "Distribution", icon: Radio },
   { id: "settings",    label: "Settings",     icon: Settings },
 ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import {
   Upload, Play, Pause, SkipBack, SkipForward, Volume2,
   Sparkles, RefreshCw, Mic2, ListMusic,
@@ -54,15 +54,59 @@ export function AIStudio() {
   const MAX_RETRIES = 2;
 
   // Audio handlers
-  const handlePlayPause = () => {
-    if (!audioRef.current) return;
+  const handlePlayPause = async () => {
+    const audio = audioRef.current;
 
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
+    if (!audio) {
+      console.error("Audio element not found");
+      return;
     }
-    setIsPlaying(!isPlaying);
+
+    try {
+      if (audio.paused) {
+        await audio.play();
+      } else {
+        audio.pause();
+      }
+    } catch (error: any) {
+      if (error?.name !== "AbortError") {
+        console.error("Play/pause error:", error);
+        showToast("Failed to play audio", "error");
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onEnded = () => setIsPlaying(false);
+
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("ended", onEnded);
+
+    return () => {
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
+    };
+  }, []);
+
+
+  const handleSkipBackward = () => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
+    setCurrentTime(audioRef.current.currentTime);
+  };
+
+  const handleSkipForward = () => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = Math.min(duration, audioRef.current.currentTime + 10);
+    setCurrentTime(audioRef.current.currentTime);
   };
 
   const handleTimeUpdate = () => {
@@ -175,7 +219,7 @@ export function AIStudio() {
           type: "structure_lyrics",
           payload: { rawLyrics: raw },
         }),
-        
+
       });
 
       const data = await res.json();
@@ -351,7 +395,7 @@ export function AIStudio() {
             industry-leading neural processing.
           </p>
         </div>
-        <div className="flex gap-2 md:gap-3">
+        {/* <div className="flex gap-2 md:gap-3">
           <button
             className="hidden sm:block px-4 py-2 rounded-lg border text-sm text-white/60 hover:text-white
                        hover:border-white/20 transition-all"
@@ -366,7 +410,7 @@ export function AIStudio() {
           >
             <Upload size={13} /> <span className="hidden sm:inline">Export Project</span><span className="sm:hidden">Export</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Drop Zone */}
@@ -620,26 +664,30 @@ export function AIStudio() {
       </div>
 
       {/* Audio Player */}
+
+      {/* Hidden audio element */}
+      <audio
+        ref={audioRef}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={handleEnded}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
+
       {uploadState === "done" && (
         <div
           className="rounded-2xl p-4 md:p-5 border"
           style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.06)" }}
         >
-          {/* Hidden audio element */}
-          <audio
-            ref={audioRef}
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            onEnded={handleEnded}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-          />
-
           {/* Mobile layout: stacked */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
             <div className="flex items-center justify-between sm:justify-start gap-3">
               <div className="flex items-center gap-2">
-                <button className="w-8 h-8 flex items-center justify-center text-white/30 hover:text-white transition-colors cursor-default opacity-50">
+                <button
+                  onClick={handleSkipBackward}
+                  className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white transition-colors"
+                >
                   <SkipBack size={17} />
                 </button>
                 <button
@@ -653,7 +701,10 @@ export function AIStudio() {
                     : <Play size={18} className="ml-0.5" />
                   }
                 </button>
-                <button className="w-8 h-8 flex items-center justify-center text-white/30 hover:text-white transition-colors cursor-default opacity-50">
+                <button
+                  onClick={handleSkipForward}
+                  className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white transition-colors"
+                >
                   <SkipForward size={17} />
                 </button>
               </div>

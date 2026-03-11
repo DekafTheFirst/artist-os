@@ -12,7 +12,13 @@ import {
   sparklineStreams, sparklineListeners, sparklineRoyalties,
 } from "@/lib/data";
 
-export function Dashboard() {
+interface DashboardProps {
+  onNavigate: (page: string) => void;
+  // ...any other existing props
+}
+
+
+export function Dashboard({ onNavigate }: DashboardProps) {
   return (
     <div className="p-4 md:p-8 overflow-y-auto h-full">
 

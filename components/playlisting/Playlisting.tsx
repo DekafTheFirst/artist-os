@@ -427,35 +427,13 @@ export function Playlisting() {
     return matchesSearch && matchesGenre && matchesMood && matchesReach;
   });
 
-  async function handleGeneratePitch(pl: Playlist) {
+  function handleGeneratePitch(pl: Playlist) {
     setPitchLoading(pl.id);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    try {
-      const res = await fetch("/api/ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "generate_pitch",
-          payload: {
-            trackName: "Neon Street",
-            playlistName: pl.name,
-            curator: pl.curator,
-            trackDescription:
-              "a late-night atmospheric electronic piece with dreamy synths, slow beats, and a melancholic neon-lit city vibe",
-          },
-        }),
-      });
-
-      const data = await res.json();
-      setPitches((prev) => ({ ...prev, [pl.id]: data.text }));
-    } catch {
-      setPitches((prev) => ({
-        ...prev,
-        [pl.id]: `"Neon Street" is an atmospheric late-night electronic journey that would complement ${pl.name}'s signature sound perfectly.`,
-      }));
-    }
-
+    
+    // Simple static pitch without AI
+    const pitch = `"Neon Street" would be a great fit for ${pl.name}. The track's atmospheric production and strong melodic hooks align perfectly with the playlist's editorial standards.`;
+    
+    setPitches((prev) => ({ ...prev, [pl.id]: pitch }));
     setPitchLoading(null);
 
     if (firstPitchId === null) {
@@ -599,14 +577,7 @@ export function Playlisting() {
           </p>
         </div>
 
-        <button
-          className="flex items-center gap-2 px-3 md:px-5 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:opacity-90 transition-all flex-shrink-0"
-          style={{ background: "linear-gradient(135deg,#06b6d4,#6366f1)" }}
-        >
-          <Sparkles size={14} />
-          <span className="hidden sm:inline">Generate AI Pitch</span>
-          <span className="sm:hidden">AI Pitch</span>
-        </button>
+
       </div>
 
       <div className="flex flex-col sm:flex-row gap-2 md:gap-3 mb-5 md:mb-6">
@@ -664,9 +635,8 @@ export function Playlisting() {
           <div
             onMouseEnter={() => setOpenDropdown("genre")}
             onMouseLeave={() => setOpenDropdown(null)}
-            className={`absolute left-0 pt-2 w-40 bg-slate-900 rounded-lg border border-white/10 z-20 py-1 transition-opacity ${
-              openDropdown === "genre" ? "block" : "hidden"
-            }`}
+            className={`absolute left-0 pt-2 w-40 bg-slate-900 rounded-lg border border-white/10 z-20 py-1 transition-opacity ${openDropdown === "genre" ? "block" : "hidden"
+              }`}
           >
             {genres.map((g) => (
               <button
@@ -675,11 +645,10 @@ export function Playlisting() {
                   setSelectedGenre(g);
                   setOpenDropdown(null);
                 }}
-                className={`w-full text-left px-4 py-2 text-sm transition-all ${
-                  selectedGenre === g
+                className={`w-full text-left px-4 py-2 text-sm transition-all ${selectedGenre === g
                     ? "bg-purple-500/20 text-purple-300"
                     : "text-white/70 hover:text-white hover:bg-white/5"
-                }`}
+                  }`}
               >
                 {g === "all" ? "All Genres" : g}
               </button>
@@ -710,9 +679,8 @@ export function Playlisting() {
           <div
             onMouseEnter={() => setOpenDropdown("mood")}
             onMouseLeave={() => setOpenDropdown(null)}
-            className={`absolute left-0 pt-2 w-40 bg-slate-900 rounded-lg border border-white/10 z-20 py-1 transition-opacity ${
-              openDropdown === "mood" ? "block" : "hidden"
-            }`}
+            className={`absolute left-0 pt-2 w-40 bg-slate-900 rounded-lg border border-white/10 z-20 py-1 transition-opacity ${openDropdown === "mood" ? "block" : "hidden"
+              }`}
           >
             {moods.map((m) => (
               <button
@@ -721,11 +689,10 @@ export function Playlisting() {
                   setSelectedMood(m);
                   setOpenDropdown(null);
                 }}
-                className={`w-full text-left px-4 py-2 text-sm transition-all ${
-                  selectedMood === m
+                className={`w-full text-left px-4 py-2 text-sm transition-all ${selectedMood === m
                     ? "bg-purple-500/20 text-purple-300"
                     : "text-white/70 hover:text-white hover:bg-white/5"
-                }`}
+                  }`}
               >
                 {m === "all" ? "All Moods" : m}
               </button>
@@ -756,9 +723,8 @@ export function Playlisting() {
           <div
             onMouseEnter={() => setOpenDropdown("reach")}
             onMouseLeave={() => setOpenDropdown(null)}
-            className={`absolute left-0 pt-2 w-40 bg-slate-900 rounded-lg border border-white/10 z-20 py-1 transition-opacity ${
-              openDropdown === "reach" ? "block" : "hidden"
-            }`}
+            className={`absolute left-0 pt-2 w-40 bg-slate-900 rounded-lg border border-white/10 z-20 py-1 transition-opacity ${openDropdown === "reach" ? "block" : "hidden"
+              }`}
           >
             {reaches.map((r) => (
               <button
@@ -767,11 +733,10 @@ export function Playlisting() {
                   setSelectedReach(r);
                   setOpenDropdown(null);
                 }}
-                className={`w-full text-left px-4 py-2 text-sm transition-all ${
-                  selectedReach === r
+                className={`w-full text-left px-4 py-2 text-sm transition-all ${selectedReach === r
                     ? "bg-purple-500/20 text-purple-300"
                     : "text-white/70 hover:text-white hover:bg-white/5"
-                }`}
+                  }`}
               >
                 {r === "all" ? "All Reaches" : r}
               </button>
@@ -782,21 +747,21 @@ export function Playlisting() {
         {(selectedGenre !== "all" ||
           selectedMood !== "all" ||
           selectedReach !== "all") && (
-          <button
-            onClick={() => {
-              setSelectedGenre("all");
-              setSelectedMood("all");
-              setSelectedReach("all");
-            }}
-            className="px-3 md:px-4 py-1.5 md:py-2 rounded-full border text-xs md:text-sm transition-all"
-            style={{
-              borderColor: "rgba(239,68,68,0.5)",
-              color: "rgba(239,68,68,1)",
-            }}
-          >
-            Clear Filters
-          </button>
-        )}
+            <button
+              onClick={() => {
+                setSelectedGenre("all");
+                setSelectedMood("all");
+                setSelectedReach("all");
+              }}
+              className="px-3 md:px-4 py-1.5 md:py-2 rounded-full border text-xs md:text-sm transition-all"
+              style={{
+                borderColor: "rgba(239,68,68,0.5)",
+                color: "rgba(239,68,68,1)",
+              }}
+            >
+              Clear Filters
+            </button>
+          )}
 
         <div className="hidden md:flex ml-auto text-xs text-white/30 items-center gap-1">
           <span className="opacity-50">↓</span> {filteredPlaylists.length}{" "}
@@ -910,7 +875,7 @@ export function Playlisting() {
                 <div className="flex gap-2 mt-3 sm:hidden">
                   {!pitches[pl.id] ? (
                     <>
-                    {firstPitchId &&
+                      {firstPitchId &&
                         firstPitchId !== pl.id &&
                         pitches[firstPitchId] && (
                           <button
@@ -924,7 +889,7 @@ export function Playlisting() {
                             Reuse Pitch
                           </button>
                         )}
-                        
+
                       <button
                         onClick={() => handleGeneratePitch(pl)}
                         disabled={pitchLoading !== null}
@@ -933,13 +898,17 @@ export function Playlisting() {
                           background: "linear-gradient(135deg,#a855f7,#6366f1)",
                         }}
                       >
-                        {pitchLoading === pl.id && (
+
+                        <Sparkles size={14} />
+
+                        {pitchLoading === pl.id ? (
                           <Loader2 size={12} className="animate-spin" />
-                        )}
+                        ) :           <Sparkles size={14} />
+}
                         Generate Pitch
                       </button>
 
-                      
+
                     </>
                   ) : (
                     <button
@@ -984,8 +953,10 @@ export function Playlisting() {
                       background: "linear-gradient(135deg,#a855f7,#6366f1)",
                     }}
                   >
-                    {pitchLoading === pl.id && (
+                    {pitchLoading === pl.id ? (
                       <Loader2 size={14} className="animate-spin" />
+                    ) : (
+                      <Sparkles size={14} />
                     )}
                     Generate Pitch
                   </button>

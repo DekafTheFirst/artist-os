@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
 import { MobileNav } from "@/components/MobileNav";
@@ -21,12 +21,13 @@ export default function ShellLayout({
   const pathname = usePathname();
   const active = getNavItemFromPath(pathname);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: "#09090b" }}>
       {/* Desktop sidebar — hidden on mobile */}
       <div className="hidden md:flex">
-        <Sidebar active={active} />
+        <Sidebar active={active} isPending={isPending} startTransition={startTransition} />
       </div>
 
       {/* Mobile slide-in drawer */}
@@ -39,7 +40,12 @@ export default function ShellLayout({
           />
           {/* drawer */}
           <div className="absolute left-0 top-0 h-full w-72 z-10">
-            <Sidebar active={active} onClose={() => setMobileMenuOpen(false)} />
+            <Sidebar 
+              active={active} 
+              onClose={() => setMobileMenuOpen(false)}
+              isPending={isPending}
+              startTransition={startTransition}
+            />
           </div>
         </div>
       )}
@@ -51,8 +57,8 @@ export default function ShellLayout({
           onOpenMenu={() => setMobileMenuOpen(true)}
         />
 
-        {/* Page content */}
-        <main className="flex-1 overflow-hidden">
+        {/* Page content with fade transition */}
+        <main className="flex-1 overflow-hidden" style={{ opacity: isPending ? 0.6 : 1, transition: "opacity 150ms ease-in-out" }}>
           {children}
         </main>
       </div>

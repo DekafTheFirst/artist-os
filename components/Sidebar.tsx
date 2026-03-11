@@ -20,17 +20,30 @@ const NAV_ITEMS: { id: NavItem; label: string; icon: React.ElementType }[] = [
 interface SidebarProps {
   active: NavItem;
   onClose?: () => void;
+  isPending?: boolean;
+  startTransition?: (callback: () => void) => void;
 }
 
-export function Sidebar({ active, onClose }: SidebarProps) {
+export function Sidebar({ active, onClose, isPending, startTransition }: SidebarProps) {
   const isStudio = active === "aistudio";
+
+  const handleNavClick = (id: NavItem) => {
+    if (startTransition && onClose) {
+      startTransition(() => {
+        onClose();
+      });
+    } else if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <aside
-      className="w-60 flex-shrink-0 flex flex-col border-r h-full"
+      className="w-60 flex-shrink-0 flex flex-col border-r h-full transition-opacity"
       style={{
         background: "#0c0c0f",
         borderColor: "rgba(255,255,255,0.05)",
+        opacity: isPending ? 0.6 : 1,
       }}
     >
       {/* Logo */}
@@ -71,7 +84,7 @@ export function Sidebar({ active, onClose }: SidebarProps) {
           <Link
             key={id}
             href={`/${id}`}
-            onClick={() => onClose && onClose()}
+            onClick={() => handleNavClick(id)}
             className={cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left",
               active === id

@@ -11,6 +11,20 @@ const assembly = new AssemblyAI({
 const ai = new GoogleGenAI({});
 const client = new ElevenLabsClient();
 
+// Timeout constants (in milliseconds)
+const ASSEMBLYAI_TIMEOUT = 30000; // 30 seconds
+const GEMINI_TIMEOUT = 30000; // 30 seconds
+
+// Helper function to wrap a promise with a timeout
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs)
+    ),
+  ]);
+}
+
 export async function POST(req: NextRequest) {
   const contentType = req.headers.get("content-type") || "";
   console.log("Received AI API request");
@@ -45,14 +59,18 @@ export async function POST(req: NextRequest) {
           console.log("Using mock transcription:", transcription);
         } else {
           // AssemblyAI async transcription; SDK uploads local/file input for you.
-          const transcript = await assembly.transcripts.transcribe({
-            audio: file,
-            speech_models: ["universal-2"],
-            // Optional:
-            // language_detection: true,
-            // format_text: true,
-            // punctuate: true,
-          });
+          const transcript = await withTimeout(
+            assembly.transcripts.transcribe({
+              audio: file,
+              speech_models: ["universal-2"],
+              // Optional:
+              // language_detection: true,
+              // format_text: true,
+              // punctuate: true,
+            }),
+            ASSEMBLYAI_TIMEOUT,
+            "AssemblyAI transcription"
+          );
 
           if (!transcript.text?.trim()) {
             return NextResponse.json(
@@ -142,25 +160,54 @@ Return only the pitch text.
       return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: prompt,
-    });
+    // Models to try in order (max 3 attempts)
+    const models = [
+      "gemini-3-flash-preview",
+      "gemini-3.1-pro-preview",
+      "gemini-3.1-flash-lite-preview",
+    ];
 
-    const text = response.text;
+    let lastError: any = null;
+    let response = null;
 
-    if (!text?.trim()) {
-      return NextResponse.json(
-        {
-          error: "Gemini request failed",
-          provider: "gemini",
-          details: "No response from Gemini",
-        },
-        { status: 502 }
-      );
+    // Try each model up to 3 times
+    for (const model of models) {
+      try {
+        console.log(`Attempting Gemini with model: ${model}`);
+        response = await withTimeout(
+          ai.models.generateContent({
+            model,
+            contents: prompt,
+          }),
+          GEMINI_TIMEOUT,
+          `Gemini request (${model})`
+        );
+
+        const text = response.text;
+
+        if (text?.trim()) {
+          console.log(`Success with model: ${model}`);
+          return NextResponse.json({ text });
+        } else {
+          lastError = "No response from Gemini";
+          console.warn(`Empty response from model ${model}, trying next...`);
+        }
+      } catch (error: any) {
+        lastError = error;
+        console.error(`Model ${model} failed:`, error?.message);
+        // Continue to next model
+      }
     }
 
-    return NextResponse.json({ text });
+    // All models failed
+    return NextResponse.json(
+      {
+        error: "Gemini request failed after 3 attempts",
+        provider: "gemini",
+        details: lastError?.message || "All models failed",
+      },
+      { status: 502 }
+    );
   } catch (error) {
     console.error("AI route error:", error);
     return NextResponse.json(

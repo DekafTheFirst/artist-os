@@ -175,16 +175,17 @@ export function AIStudio() {
           type: "structure_lyrics",
           payload: { rawLyrics: raw },
         }),
+        
       });
+
+      const data = await res.json();
 
       if (!res.ok) {
         if (res.status === 429) {
           throw new Error("Too many requests. Please wait before trying again.");
         }
-        throw new Error("Failed to structure lyrics");
+        throw new Error(data.details || data.error || "Failed to structure lyrics");
       }
-
-      const data = await res.json();
       if (!data.text?.trim()) {
         throw new Error("Empty response from AI");
       }
@@ -197,14 +198,16 @@ export function AIStudio() {
         showToast("Could not parse structured lyrics", "error");
       }
     } catch (error) {
+      console.error("Structure error:", error);
       showToast(
-        error instanceof Error ? error.message : "Failed to structure lyrics",
+        "Failed to structure lyrics.. Please try again later",
         "error"
       );
       setStructured(null);
+    } finally {
+      setAiLoading(false);
     }
-    setAiLoading(false);
-  }, [aiLoading]);
+  }, []);
 
   function simulateUpload(e: React.ChangeEvent<HTMLInputElement> | undefined = undefined) {
     const audioFile = e?.target?.files?.[0];

@@ -5,19 +5,26 @@ import {
   Upload, Play, Pause, SkipBack, SkipForward, Volume2,
   Sparkles, RefreshCw, Mic2, ListMusic,
   Loader2, CheckCircle,
-  Copy,
+  Copy, Check, AlertCircle, X,
 } from "lucide-react";
 import { FxToggle } from "@/components/ui/FxToggle";
 import { fxControls, SAMPLE_RAW_LYRICS, FALLBACK_STRUCTURED, type LyricsSection } from "@/lib/data";
 import { parseStructuredLyrics } from "@/lib/utils";
 
 type UploadState = "idle" | "uploading" | "transcribing" | "done";
+type ToastType = "error" | "success";
 
 interface FileMetadata {
   file: File;
   duration: number;
   size: number;
   name: string;
+}
+
+interface Toast {
+  id: string;
+  type: ToastType;
+  message: string;
 }
 
 export function AIStudio() {
@@ -28,7 +35,50 @@ export function AIStudio() {
   const [rawText, setRawText] = useState("");
   const [structured, setStructured] = useState<LyricsSection[] | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const [copiedRaw, setCopiedRaw] = useState(false);
+  const [copiedStructured, setCopiedStructured] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastStructureRequestRef = useRef<number>(0);
+  const pendingStructureRef = useRef<string | null>(null);
+
+  // Rate limiting constants
+  const STRUCTURE_REQUEST_COOLDOWN = 3000; // 3 seconds between requests
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+  const ALLOWED_FORMATS = ["audio/wav", "audio/mpeg", "audio/mp4"];
+  const MAX_RETRIES = 2;
+
+  const showToast = (message: string, type: ToastType = "error") => {
+    const id = Math.random().toString(36);
+    setToasts((prev) => [...prev, { id, message, type }]);
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    toastTimeoutRef.current = setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
+
+  const removeToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  const copyToClipboard = async (text: string, isRaw: boolean) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (isRaw) {
+        setCopiedRaw(true);
+        setTimeout(() => setCopiedRaw(false), 2000);
+      } else {
+        setCopiedStructured(true);
+        setTimeout(() => setCopiedStructured(false), 2000);
+      }
+      showToast("Copied to clipboard!", "success");
+    } catch (error) {
+      showToast("Failed to copy", "error");
+    }
+  };
 
   const extractAudioDuration = useCallback(async (audioFile: File): Promise<number> => {
     return new Promise((resolve) => {
@@ -47,7 +97,26 @@ export function AIStudio() {
   }, []);
 
   const structureLyrics = useCallback(async (raw: string) => {
+    const now = Date.now();
+    const timeSinceLastRequest = now - lastStructureRequestRef.current;
+
+    // Rate limiting check
+    if (timeSinceLastRequest < STRUCTURE_REQUEST_COOLDOWN) {
+      showToast(
+        `Please wait ${Math.ceil((STRUCTURE_REQUEST_COOLDOWN - timeSinceLastRequest) / 1000)}s before regenerating`,
+        "error"
+      );
+      return;
+    }
+
+    if (aiLoading) {
+      showToast("Already processing, please wait...", "error");
+      return;
+    }
+
     setAiLoading(true);
+    lastStructureRequestRef.current = now;
+
     try {
       const res = await fetch("/api/ai", {
         method: "POST",
@@ -57,14 +126,35 @@ export function AIStudio() {
           payload: { rawLyrics: raw },
         }),
       });
+
+      if (!res.ok) {
+        if (res.status === 429) {
+          throw new Error("Too many requests. Please wait before trying again.");
+        }
+        throw new Error("Failed to structure lyrics");
+      }
+
       const data = await res.json();
-      const parsed = parseStructuredLyrics(data.text ?? "");
-      setStructured(parsed.length ? parsed : FALLBACK_STRUCTURED);
-    } catch {
-      setStructured(FALLBACK_STRUCTURED);
+      if (!data.text?.trim()) {
+        throw new Error("Empty response from AI");
+      }
+
+      const parsed = parseStructuredLyrics(data.text);
+      setStructured(parsed.length ? parsed : null);
+      pendingStructureRef.current = null;
+
+      if (!parsed.length) {
+        showToast("Could not parse structured lyrics", "error");
+      }
+    } catch (error) {
+      showToast(
+        error instanceof Error ? error.message : "Failed to structure lyrics",
+        "error"
+      );
+      setStructured(null);
     }
     setAiLoading(false);
-  }, []);
+  }, [aiLoading]);
 
   function simulateUpload(e: React.ChangeEvent<HTMLInputElement> | undefined = undefined) {
     const audioFile = e?.target?.files?.[0];
@@ -78,11 +168,42 @@ export function AIStudio() {
       return;
     }
 
+    // Validate file size
+    if (audioFile.size > MAX_FILE_SIZE) {
+      showToast(`File too large. Maximum size is 50MB. Your file is ${(audioFile.size / 1024 / 1024).toFixed(1)}MB`, "error");
+      return;
+    }
+
+    // Validate file format
+    if (!ALLOWED_FORMATS.includes(audioFile.type)) {
+      showToast(`Unsupported format. Please use WAV, MP3, or M4A`, "error");
+      return;
+    }
+
+    // Prevent rapid consecutive uploads
+    if (uploadState !== "done" && uploadState !== "idle") {
+      showToast("Already processing a file. Please wait...", "error");
+      return;
+    }
+
     setUploadState("uploading");
 
     try {
       // Extract duration first
       const duration = await extractAudioDuration(audioFile);
+
+      // Validate duration (reasonable song length)
+      if (duration > 3600) {
+        showToast("Audio too long. Maximum 1 hour per file.", "error");
+        setUploadState("idle");
+        return;
+      }
+
+      if (duration < 3) {
+        showToast("Audio too short. Minimum 3 seconds.", "error");
+        setUploadState("idle");
+        return;
+      }
 
       // Set file metadata
       setFile({
@@ -98,7 +219,6 @@ export function AIStudio() {
       const formData = new FormData();
       formData.append("audio", audioFile);
       formData.append("type", "transcribe_audio");
-      // formData.append("mock", "true");
 
       const res = await fetch("/api/ai", {
         method: "POST",
@@ -106,22 +226,35 @@ export function AIStudio() {
       });
 
       if (!res.ok) {
+        if (res.status === 413) {
+          throw new Error("File too large for server. Try a smaller file.");
+        }
+        if (res.status === 429) {
+          throw new Error("Too many requests. Please wait before uploading another file.");
+        }
         throw new Error("Transcription failed");
       }
 
       const data = await res.json();
-      const transcribedText = data.transcription || SAMPLE_RAW_LYRICS;
+      const transcribedText = data.transcription;
+
+      if (!transcribedText?.trim()) {
+        throw new Error("Empty transcription returned");
+      }
 
       setRawText(transcribedText);
+      showToast("Transcription complete!", "success");
       await structureLyrics(transcribedText);
       setUploadState("done");
-
     } catch (error) {
       console.error("Upload/transcription error:", error);
-      // Fallback to sample data
-      setRawText(SAMPLE_RAW_LYRICS);
-      await structureLyrics(SAMPLE_RAW_LYRICS);
+      showToast(
+        error instanceof Error ? error.message : "Failed to process audio",
+        "error"
+      );
       setUploadState("done");
+      setRawText("");
+      setStructured(null);
     }
   };
 
@@ -288,8 +421,7 @@ export function AIStudio() {
           className="rounded-2xl border overflow-hidden"
           style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.06)" }}
         >
-          <div
-            className="flex items-center justify-between px-4 md:px-5 py-3 md:py-3.5 border-b"
+          <div className="flex items-center justify-between px-4 md:px-5 py-3 md:py-3.5 border-b"
             style={{ borderColor: "rgba(255,255,255,0.05)" }}
           >
             <div className="flex items-center gap-2 text-sm font-medium">
@@ -303,9 +435,17 @@ export function AIStudio() {
               >
                 REAL-TIME
               </span>
-              <div className="cursor-pointer hover:bg-gray-400/10 p-[7px] px-[9px] rounded">
-                <Copy size={15} />
-              </div>
+              <button
+                onClick={() => rawText && copyToClipboard(rawText, true)}
+                className="cursor-pointer hover:bg-gray-400/10 p-[7px] px-[9px] rounded transition-all"
+                title="Copy raw lyrics"
+              >
+                {copiedRaw ? (
+                  <Check size={15} className="text-green-400 animate-pulse" />
+                ) : (
+                  <Copy size={15} />
+                )}
+              </button>
             </div>
           </div>
           <div className="p-4 md:p-5 min-h-36 md:min-h-52">
@@ -333,17 +473,33 @@ export function AIStudio() {
               <Sparkles size={15} className="text-orange-400" />
               AI Structured Lyrics
             </div>
-            <button
-              onClick={() => rawText && structureLyrics(rawText)}
-              className="text-[11px] text-orange-400 font-medium flex items-center gap-1
+            <div className="flex gap-2 items-center">
+              <button
+                onClick={() => structured && copyToClipboard(
+                  structured.map(s => `[${s.tag}]\n${s.lines.join('\n')}`).join('\n\n'),
+                  false
+                )}
+                className="text-[11px] text-white/40 hover:text-white p-[7px] px-[9px] rounded transition-all flex items-center gap-1"
+                title="Copy structured lyrics"
+              >
+                {copiedStructured ? (
+                  <Check size={11} className="text-green-400" />
+                ) : (
+                  <Copy size={11} />
+                )}
+              </button>
+              <button
+                onClick={() => rawText && structureLyrics(rawText)}
+                className="text-[11px] text-orange-400 font-medium flex items-center gap-1
                          hover:text-orange-300 transition-colors"
-            >
-              {aiLoading
-                ? <Loader2 size={11} className="animate-spin" />
-                : <RefreshCw size={11} />
-              }
-              Regenerate
-            </button>
+              >
+                {aiLoading
+                  ? <Loader2 size={11} className="animate-spin" />
+                  : <RefreshCw size={11} />
+                }
+                Regenerate
+              </button>
+            </div>
           </div>
           <div className="p-4 md:p-5 min-h-36 md:min-h-52 space-y-3 md:space-y-4">
             {aiLoading && (
@@ -458,6 +614,46 @@ export function AIStudio() {
           </div>
         </div>
       )}
+
+      {/* Toast Notifications */}
+      <div className="fixed bottom-4 right-4 space-y-2 z-50 max-w-sm">
+        {toasts.map((toast) => (
+          <div
+            key={toast.id}
+            className="flex items-center gap-3 px-4 py-3 rounded-lg border backdrop-blur-sm animate-in fade-in slide-in-from-bottom duration-300"
+            style={{
+              background:
+                toast.type === "error"
+                  ? "rgba(239, 68, 68, 0.15)"
+                  : "rgba(16, 185, 129, 0.15)",
+              borderColor:
+                toast.type === "error"
+                  ? "rgba(239, 68, 68, 0.3)"
+                  : "rgba(16, 185, 129, 0.3)",
+            }}
+          >
+            {toast.type === "error" ? (
+              <AlertCircle size={16} className="text-red-400 flex-shrink-0" />
+            ) : (
+              <Check size={16} className="text-green-400 flex-shrink-0" />
+            )}
+            <p
+              className="text-sm flex-1"
+              style={{
+                color: "rgba(255, 255, 255, 0.9)",
+              }}
+            >
+              {toast.message}
+            </p>
+            <button
+              onClick={() => removeToast(toast.id)}
+              className="text-white/40 hover:text-white/60 transition-colors p-1"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

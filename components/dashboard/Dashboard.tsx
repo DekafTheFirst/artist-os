@@ -11,14 +11,13 @@ import {
   streamingData, playlists,
   sparklineStreams, sparklineListeners, sparklineRoyalties,
 } from "@/lib/data";
-
-interface DashboardProps {
-  onNavigate: (page: string) => void;
-  // ...any other existing props
-}
+import Link from "next/link";
 
 
-export function Dashboard({ onNavigate }: DashboardProps) {
+
+
+
+export function Dashboard() {
   return (
     <div className="p-4 md:p-8 overflow-y-auto h-full">
 
@@ -90,11 +89,11 @@ export function Dashboard({ onNavigate }: DashboardProps) {
           <AreaChart data={streamingData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
             <defs>
               <linearGradient id="gradStreams" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%"  stopColor="#a855f7" stopOpacity={0.4} />
+                <stop offset="5%" stopColor="#a855f7" stopOpacity={0.4} />
                 <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="gradListeners" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%"  stopColor="#06b6d4" stopOpacity={0.3} />
+                <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3} />
                 <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
               </linearGradient>
             </defs>
@@ -137,35 +136,18 @@ export function Dashboard({ onNavigate }: DashboardProps) {
       <div>
         <div className="flex justify-between items-center mb-3 md:mb-4">
           <h2 className="text-base md:text-lg font-semibold">Target Playlists</h2>
-          <button
-            onClick={() => onNavigate("playlisting")}
-            className="text-xs md:text-sm text-purple-400 flex items-center gap-1 hover:text-purple-300 transition-colors"
-          >
-            View All <ArrowUpRight size={13} />
-          </button>
+          <Link href="/playlisting" className="text-xs md:text-sm text-purple-400 flex items-center gap-1 hover:text-purple-300 transition-colors">
+            View All
+          </Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
           {playlists.map((pl) => (
-            <button
+            <Link
               key={pl.id}
-              onClick={() => onNavigate("playlisting")}
+              href="/playlisting"
               className="rounded-xl p-3 border flex items-center gap-2 md:gap-3 hover:border-white/10 transition-all text-left"
               style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.05)" }}
-            >
-              <div
-                className="w-9 h-9 md:w-10 md:h-10 rounded-lg flex items-center justify-center text-lg md:text-xl flex-shrink-0"
-                style={{
-                  background: `linear-gradient(135deg, ${pl.color}30, ${pl.color}10)`,
-                  border: `1px solid ${pl.color}40`,
-                }}
-              >
-                {pl.badge}
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs md:text-sm font-medium truncate">{pl.name}</p>
-                <p className="text-[10px] md:text-xs text-white/40">{pl.tag}</p>
-              </div>
-            </button>
+            ></Link>
           ))}
         </div>
       </div>

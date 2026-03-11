@@ -6,6 +6,7 @@ import {
   Sparkles, RefreshCw, Mic2, ListMusic,
   Loader2, CheckCircle,
   Copy, Check, AlertCircle, X,
+  Download,
 } from "lucide-react";
 import { FxToggle } from "@/components/ui/FxToggle";
 import { fxControls, SAMPLE_RAW_LYRICS, FALLBACK_STRUCTURED, type LyricsSection } from "@/lib/data";
@@ -113,6 +114,18 @@ export function AIStudio() {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
     }
+  };
+
+  const exportToTxt = () => {
+    if (!structured) return;
+    const content = structured.map(s => `[${s.tag}]\n${s.lines.join('\n')}`).join('\n\n');
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${file?.name?.replace(/\.[^.]+$/, '') ?? 'lyrics'}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const handleLoadedMetadata = () => {
@@ -389,7 +402,7 @@ export function AIStudio() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6 md:mb-8">
         <div>
-          <h1 className="text-xl md:text-3xl font-bold tracking-tight">Vocal Studio</h1>
+          <h1 className="text-xl md:text-3xl font-bold tracking-tight">AI Lyric Transcriber</h1>
           <p className="text-white/40 text-xs md:text-sm mt-1 max-w-lg">
             Transform raw vocal takes into structured lyrical compositions using
             industry-leading neural processing.
@@ -550,7 +563,7 @@ export function AIStudio() {
               >
                 REAL-TIME
               </span>
-              <button
+              {rawText && <button
                 onClick={() => rawText && copyToClipboard(rawText, true)}
                 className="cursor-pointer hover:bg-gray-400/10 p-[7px] px-[9px] rounded transition-all"
                 title="Copy raw lyrics"
@@ -560,7 +573,7 @@ export function AIStudio() {
                 ) : (
                   <Copy size={15} />
                 )}
-              </button>
+              </button>}
             </div>
           </div>
           <div className="p-4 md:p-5 min-h-36 md:min-h-52">
@@ -588,7 +601,20 @@ export function AIStudio() {
               <Sparkles size={15} className="text-orange-400" />
               AI Structured Lyrics
             </div>
-            <div className="flex gap-2 items-center">
+            {structured && <div className="flex  items-center">
+              
+              <button
+                onClick={() => rawText && structureLyrics(rawText)}
+                className="text-[11px] text-orange-400 font-medium flex items-center gap-1
+                         hover:text-orange-300 transition-colors mr-3"
+              >
+                {aiLoading
+                  ? <Loader2 size={11} className="animate-spin" />
+                  : <RefreshCw size={11} />
+                }
+                Regenerate
+              </button>
+
               <button
                 onClick={() => structured && copyToClipboard(
                   structured.map(s => `[${s.tag}]\n${s.lines.join('\n')}`).join('\n\n'),
@@ -598,23 +624,20 @@ export function AIStudio() {
                 title="Copy structured lyrics"
               >
                 {copiedStructured ? (
-                  <Check size={11} className="text-green-400" />
+                  <Check size={15} className="text-green-400" />
                 ) : (
-                  <Copy size={11} />
+                  <Copy size={15} />
                 )}
               </button>
+
               <button
-                onClick={() => rawText && structureLyrics(rawText)}
-                className="text-[11px] text-orange-400 font-medium flex items-center gap-1
-                         hover:text-orange-300 transition-colors"
+                onClick={exportToTxt}
+                className="text-[11px] text-white/40 hover:text-white p-[7px] px-[9px] rounded transition-all flex items-center gap-1"
+                title="Export as .txt"
               >
-                {aiLoading
-                  ? <Loader2 size={11} className="animate-spin" />
-                  : <RefreshCw size={11} />
-                }
-                Regenerate
+                <Download size={15} />
               </button>
-            </div>
+            </div>}
           </div>
           <div className="p-4 md:p-5 min-h-36 md:min-h-52 space-y-3 md:space-y-4">
             {aiLoading && (

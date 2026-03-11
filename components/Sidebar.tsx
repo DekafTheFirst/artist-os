@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   LayoutDashboard, BarChart2, Radio, Cpu, ListMusic,
   Settings, Zap, Music2, ArrowUpRight, X,
+  Sparkles,
 } from "lucide-react";
 import type { NavItem } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,7 @@ import { cn } from "@/lib/utils";
 const NAV_ITEMS: { id: NavItem; label: string; icon: React.ElementType }[] = [
   { id: "dashboard",   label: "Dashboard",    icon: LayoutDashboard },
   { id: "analytics",   label: "Analytics",    icon: BarChart2 },
-  { id: "aistudio",    label: "AI Studio",    icon: Cpu },
+  { id: "aistudio",    label: "Lyric Transcriber",    icon: Sparkles },
   { id: "playlisting", label: "Playlisting",  icon: ListMusic },
   { id: "distro",      label: "Distribution", icon: Radio },
   { id: "settings",    label: "Settings",     icon: Settings },
@@ -123,7 +124,7 @@ export function Sidebar({ active, onClose, isPending, startTransition }: Sidebar
             onClick={() => onClose && onClose()}
             className="text-[11px] text-purple-400 font-medium flex items-center gap-1 hover:text-purple-300"
           >
-            Vocal Studio <ArrowUpRight size={10} />
+            Lyric Transcriber <ArrowUpRight size={10} />
           </Link>
         </div>
 

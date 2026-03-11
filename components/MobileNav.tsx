@@ -9,14 +9,14 @@ const BOTTOM_TABS: { id: NavItem; label: string; icon: React.ElementType }[] = [
   { id: "dashboard",   label: "Home",      icon: LayoutDashboard },
   { id: "analytics",   label: "Analytics", icon: BarChart2 },
   { id: "playlisting", label: "Playlist",  icon: ListMusic },
-  { id: "aistudio",    label: "Studio",    icon: Cpu },
+  { id: "aistudio",    label: "Lyric Transcriber",    icon: Cpu },
 ];
 
 const PAGE_TITLES: Record<NavItem, string> = {
   dashboard:   "Analytics Overview",
   analytics:   "Analytics",
   playlisting: "AI Playlisting",
-  aistudio:    "Vocal Studio",
+  aistudio:    "AI Lyric Transcriber",
   distro:      "Distribution",
   settings:    "Settings",
 };

@@ -1,75 +1,172 @@
 import { NextRequest, NextResponse } from "next/server";
+import { AssemblyAI } from "assemblyai";
+import Groq from "groq-sdk";
+import { SAMPLE_RAW_LYRICS } from "@/lib/data";
+
+const assembly = new AssemblyAI({
+  apiKey: process.env.ASSEMBLYAI_API_KEY!,
+});
+
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY!,
+});
 
 export async function POST(req: NextRequest) {
   const contentType = req.headers.get("content-type") || "";
+  console.log("Received AI API request");
 
-  if (contentType.includes("multipart/form-data")) {
-    // Handle file upload for transcription
-    const formData = await req.formData();
-    const file = formData.get("audio") as File;
-    const type = formData.get("type") as string;
+  try {
+    if (contentType.includes("multipart/form-data")) {
+      const formData = await req.formData();
+      const file = formData.get("audio") as File | null;
+      const type = formData.get("type") as string | null;
+      const useMock = formData.get("mock") === "true";
 
-    if (!file || type !== "transcribe_audio") {
-      return NextResponse.json({ error: "Invalid file or type" }, { status: 400 });
+      if (!file || type !== "transcribe_audio") {
+        return NextResponse.json(
+          { error: "Invalid file or type" },
+          { status: 400 }
+        );
+      }
+
+      if (!process.env.ASSEMBLYAI_API_KEY && !useMock) {
+        return NextResponse.json(
+          { error: "ASSEMBLYAI_API_KEY not set" },
+          { status: 500 }
+        );
+      }
+
+      try {
+        let transcription: string;
+
+        if (useMock) {
+          // Mock transcription for testing
+          transcription = SAMPLE_RAW_LYRICS;
+          console.log("Using mock transcription:", transcription);
+        } else {
+          // AssemblyAI async transcription; SDK uploads local/file input for you.
+          const transcript = await assembly.transcripts.transcribe({
+            audio: file,
+            speech_models: ["universal-2"],
+            // Optional:
+            // language_detection: true,
+            // format_text: true,
+            // punctuate: true,
+          });
+
+          if (!transcript.text?.trim()) {
+            return NextResponse.json(
+              { error: "Empty transcription returned" },
+              { status: 502 }
+            );
+          }
+
+          transcription = transcript.text.trim();
+          console.log("Transcription successful:", transcription);
+        }
+
+        return NextResponse.json({
+          transcription,
+          provider: useMock ? "mock" : "assemblyai",
+        });
+      } catch (error: any) {
+        console.error("AssemblyAI transcription error:", error);
+
+        return NextResponse.json(
+          {
+            error: "Transcription failed",
+            provider: "assemblyai",
+            details:
+              error?.response?.data?.error ||
+              error?.message ||
+              "Unknown AssemblyAI error",
+          },
+          { status: 502 }
+        );
+      }
     }
 
-    // For now, return mock transcription - replace with actual transcription service
-    const mockTranscription = `Yeah, I'm feeling good tonight
-The lights are shining bright
-Got my favorite song on repeat
-Dancing like there's no defeat
+    const { type, payload } = await req.json();
 
-This is the chorus, hear me loud
-Singing to the crowd
-Life is beautiful, no doubt
-We're gonna figure it out
+    const apiKey = process.env.GROQ_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "GROQ_API_KEY not set" },
+        { status: 500 }
+      );
+    }
 
-Verse two coming through
-Got a message just for you
-Keep your head up, stay true
-Everything's gonna be brand new`;
+    let prompt = "";
 
-    return NextResponse.json({ transcription: mockTranscription });
-  }
+    if (type === "structure_lyrics") {
+      prompt = `
+Analyze these raw vocal transcription lyrics and structure them into a professional song format with proper sections.
 
-  // Handle JSON requests for other operations
-  const { type, payload } = await req.json();
+Available section tags (use only these):
+[INTRO]
+[VERSE 1]
+[PRE-CHORUS]
+[CHORUS]
+[POST-CHORUS]
+[VERSE 2]
+[BRIDGE]
+[OUTRO]
+[HOOK] (if applicable)
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ error: "ANTHROPIC_API_KEY not set" }, { status: 500 });
-  }
+Guidelines:
+- Return ONLY the structured lyrics with section tags
+- No explanations or additional text
+- Keep original wording as much as possible, but clean up obvious transcription errors
+- Each lyric line on its own line
+- Group similar repeating sections under the same tag (e.g., multiple CHORUS sections)
+- Use line breaks between sections
+- If lyrics are short, use fewer sections
+- Capitalize the first letter of each line appropriately
+- Infer the most logical song structure based on content and repetition
 
-  let prompt = "";
+Raw lyrics:
+${payload?.rawLyrics ?? ""}
+      `.trim();
+    } else if (type === "generate_pitch") {
+      prompt = `
+Write a short, compelling playlist submission pitch in 2-3 sentences max.
 
-  if (type === "structure_lyrics") {
-    prompt = `Take these raw vocal transcription lyrics and structure them into a professional song format with [VERSE 1], [CHORUS], [VERSE 2], [BRIDGE] tags as appropriate. Format each line cleanly on its own line. Return ONLY the structured lyrics with section tags in square brackets, no explanation or preamble:\n\n${payload.rawLyrics}`;
-  } else if (type === "generate_pitch") {
-    prompt = `Write a short, compelling playlist submission pitch (2-3 sentences max) for submitting the track "${payload.trackName}" to the "${payload.playlistName}" playlist curated by ${payload.curator}. The track is: ${payload.trackDescription}. Be specific, professional, and persuasive. Return only the pitch text with no preamble.`;
-  } else {
-    return NextResponse.json({ error: "Unknown type" }, { status: 400 });
-  }
+Track: ${payload?.trackName ?? ""}
+Playlist: ${payload?.playlistName ?? ""}
+Curator: ${payload?.curator ?? ""}
+Description: ${payload?.trackDescription ?? ""}
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
+Return only the pitch text.
+      `.trim();
+    } else {
+      return NextResponse.json({ error: "Unknown type" }, { status: 400 });
+    }
+
+    const response = await groq.chat.completions.create({
+      model: "openai/gpt-oss-20b",
       messages: [{ role: "user", content: prompt }],
-    }),
-  });
+      max_tokens: 1500,
+    });
 
-  if (!response.ok) {
-    const err = await response.text();
-    return NextResponse.json({ error: err }, { status: response.status });
+    if (!response.choices || response.choices.length === 0) {
+      return NextResponse.json(
+        {
+          error: "Groq request failed",
+          provider: "groq",
+          details: "No response from Groq",
+        },
+        { status: 502 }
+      );
+    }
+
+    const text = response.choices[0].message.content ?? "";
+
+    return NextResponse.json({ text });
+  } catch (error) {
+    console.error("AI route error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
-
-  const data = await response.json();
-  const text = data.content?.[0]?.text ?? "";
-  return NextResponse.json({ text });
 }

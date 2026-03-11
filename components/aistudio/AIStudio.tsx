@@ -98,6 +98,7 @@ export function AIStudio() {
       const formData = new FormData();
       formData.append("audio", audioFile);
       formData.append("type", "transcribe_audio");
+      // formData.append("mock", "true");
 
       const res = await fetch("/api/ai", {
         method: "POST",

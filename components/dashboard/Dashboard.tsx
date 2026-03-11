@@ -11,13 +11,8 @@ import {
   streamingData, playlists,
   sparklineStreams, sparklineListeners, sparklineRoyalties,
 } from "@/lib/data";
-import type { NavItem } from "@/lib/data";
 
-interface DashboardProps {
-  onNavigate: (id: NavItem) => void;
-}
-
-export function Dashboard({ onNavigate }: DashboardProps) {
+export function Dashboard() {
   return (
     <div className="p-4 md:p-8 overflow-y-auto h-full">
 

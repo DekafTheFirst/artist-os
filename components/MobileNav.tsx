@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Menu, LayoutDashboard, BarChart2, ListMusic, Cpu, Zap } from "lucide-react";
 import type { NavItem } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -23,10 +24,9 @@ const PAGE_TITLES: Record<NavItem, string> = {
 interface MobileNavProps {
   active: NavItem;
   onOpenMenu: () => void;
-  onNavigate: (id: NavItem) => void;
 }
 
-export function MobileNav({ active, onOpenMenu, onNavigate }: MobileNavProps) {
+export function MobileNav({ active, onOpenMenu }: MobileNavProps) {
   return (
     <>
       {/* Top bar — mobile only */}
@@ -66,9 +66,9 @@ export function MobileNav({ active, onOpenMenu, onNavigate }: MobileNavProps) {
         }}
       >
         {BOTTOM_TABS.map(({ id, label, icon: Icon }) => (
-          <button
+          <Link
             key={id}
-            onClick={() => onNavigate(id)}
+            href={`/${id}`}
             className={cn(
               "flex flex-col items-center gap-1 py-3 px-4 transition-all flex-1",
               active === id ? "text-purple-400" : "text-white/30"
@@ -76,7 +76,7 @@ export function MobileNav({ active, onOpenMenu, onNavigate }: MobileNavProps) {
           >
             <Icon size={20} strokeWidth={active === id ? 2.5 : 1.5} />
             <span className="text-[10px] font-medium">{label}</span>
-          </button>
+          </Link>
         ))}
       </nav>
     </>

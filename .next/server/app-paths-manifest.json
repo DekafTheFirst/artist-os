@@ -1,4 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js"
+  "/api/ai/route": "app/api/ai/route.js",
+  "/(shell)/analytics/page": "app/(shell)/analytics/page.js",
+  "/(shell)/dashboard/page": "app/(shell)/dashboard/page.js",
+  "/(shell)/aistudio/page": "app/(shell)/aistudio/page.js",
+  "/(shell)/playlisting/page": "app/(shell)/playlisting/page.js"
 }

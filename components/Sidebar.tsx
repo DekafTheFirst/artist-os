@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   LayoutDashboard, BarChart2, Radio, Cpu, ListMusic,
   Settings, Zap, Music2, ArrowUpRight, X,
@@ -18,11 +19,10 @@ const NAV_ITEMS: { id: NavItem; label: string; icon: React.ElementType }[] = [
 
 interface SidebarProps {
   active: NavItem;
-  onNavigate: (id: NavItem) => void;
   onClose?: () => void;
 }
 
-export function Sidebar({ active, onNavigate, onClose }: SidebarProps) {
+export function Sidebar({ active, onClose }: SidebarProps) {
   const isStudio = active === "aistudio";
 
   return (
@@ -68,11 +68,12 @@ export function Sidebar({ active, onNavigate, onClose }: SidebarProps) {
       {/* Nav items */}
       <nav className="flex-1 p-3 space-y-0.5">
         {NAV_ITEMS.map(({ id, label, icon: Icon }) => (
-          <button
+          <Link
             key={id}
-            onClick={() => onNavigate(id)}
+            href={`/${id}`}
+            onClick={() => onClose && onClose()}
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left",
+              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left",
               active === id
                 ? "text-purple-300 font-medium"
                 : "text-white/40 hover:text-white/70 hover:bg-white/5"
@@ -85,7 +86,7 @@ export function Sidebar({ active, onNavigate, onClose }: SidebarProps) {
           >
             <Icon size={16} />
             {label}
-          </button>
+          </Link>
         ))}
       </nav>
 
@@ -104,12 +105,13 @@ export function Sidebar({ active, onNavigate, onClose }: SidebarProps) {
           <p className="text-[11px] text-white/55 mb-2">
             New: Neural vocal cloning is now live.
           </p>
-          <button
-            onClick={() => onNavigate("aistudio")}
+          <Link
+            href="/aistudio"
+            onClick={() => onClose && onClose()}
             className="text-[11px] text-purple-400 font-medium flex items-center gap-1 hover:text-purple-300"
           >
             Vocal Studio <ArrowUpRight size={10} />
-          </button>
+          </Link>
         </div>
 
         <div className="flex items-center gap-2.5 px-1">

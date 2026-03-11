@@ -25,16 +25,11 @@ export function ArtistOSShell() {
   const [active, setActive] = useState<NavItem>("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  function navigate(id: NavItem) {
-    setActive(id);
-    setMobileMenuOpen(false);
-  }
-
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: "#09090b" }}>
       {/* Desktop sidebar — hidden on mobile */}
       <div className="hidden md:flex">
-        <Sidebar active={active} onNavigate={navigate} />
+        <Sidebar active={active} />
       </div>
 
       {/* Mobile slide-in drawer */}
@@ -47,7 +42,7 @@ export function ArtistOSShell() {
           />
           {/* drawer */}
           <div className="absolute left-0 top-0 h-full w-72 z-10">
-            <Sidebar active={active} onNavigate={navigate} onClose={() => setMobileMenuOpen(false)} />
+            <Sidebar active={active} onClose={() => setMobileMenuOpen(false)} />
           </div>
         </div>
       )}
@@ -57,12 +52,11 @@ export function ArtistOSShell() {
         <MobileNav
           active={active}
           onOpenMenu={() => setMobileMenuOpen(true)}
-          onNavigate={navigate}
         />
 
         {/* Page content */}
         <main className="flex-1 overflow-hidden">
-          {active === "dashboard"   && <Dashboard   onNavigate={navigate} />}
+          {active === "dashboard"   && <Dashboard />}
           {active === "analytics"   && <Analytics />}
           {active === "playlisting" && <Playlisting />}
           {active === "aistudio"    && <AIStudio />}

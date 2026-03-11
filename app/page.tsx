@@ -1,5 +1,5 @@
-import { ArtistOSShell } from "@/components/ArtistOSShell";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <ArtistOSShell />;
+  redirect("/dashboard");
 }

@@ -38,7 +38,11 @@ export function AIStudio() {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [copiedRaw, setCopiedRaw] = useState(false);
   const [copiedStructured, setCopiedStructured] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.75);
   const fileRef = useRef<HTMLInputElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastStructureRequestRef = useRef<number>(0);
   const pendingStructureRef = useRef<string | null>(null);
@@ -48,6 +52,52 @@ export function AIStudio() {
   const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
   const ALLOWED_FORMATS = ["audio/wav", "audio/mpeg", "audio/mp4"];
   const MAX_RETRIES = 2;
+
+  // Audio handlers
+  const handlePlayPause = () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  };
+
+  const handleEnded = () => {
+    setIsPlaying(false);
+  };
+
+  const handleProgressChange = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current || !duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percentage = x / rect.width;
+    const newTime = percentage * duration;
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
 
   const showToast = (message: string, type: ToastType = "error") => {
     const id = Math.random().toString(36);
@@ -205,6 +255,9 @@ export function AIStudio() {
         return;
       }
 
+      // Create audio URL for playback
+      const audioUrl = URL.createObjectURL(audioFile);
+
       // Set file metadata
       setFile({
         file: audioFile,
@@ -212,6 +265,12 @@ export function AIStudio() {
         size: audioFile.size,
         name: audioFile.name,
       });
+
+      // Setup audio element
+      if (audioRef.current) {
+        audioRef.current.src = audioUrl;
+        audioRef.current.volume = volume;
+      }
 
       // Start transcription
       setUploadState("transcribing");
@@ -380,6 +439,15 @@ export function AIStudio() {
             <p className="text-white/40 text-xs md:text-sm">{Math.floor(file.duration / 60)}:{String(Math.floor(file.duration % 60)).padStart(2, '0')} · {(file.size / 1024 / 1024).toFixed(1)} MB · Processing complete</p>
             <button
               onClick={() => {
+                // Clean up audio
+                if (audioRef.current) {
+                  audioRef.current.pause();
+                  audioRef.current.src = "";
+                }
+                setIsPlaying(false);
+                setCurrentTime(0);
+                setDuration(0);
+
                 setUploadState("idle");
                 setFile(undefined);
                 setRawText("");
@@ -554,15 +622,25 @@ export function AIStudio() {
           className="rounded-2xl p-4 md:p-5 border"
           style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.06)" }}
         >
+          {/* Hidden audio element */}
+          <audio
+            ref={audioRef}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            onEnded={handleEnded}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+          />
+
           {/* Mobile layout: stacked */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
             <div className="flex items-center justify-between sm:justify-start gap-3">
               <div className="flex items-center gap-2">
-                <button className="w-8 h-8 flex items-center justify-center text-white/30 hover:text-white transition-colors">
+                <button className="w-8 h-8 flex items-center justify-center text-white/30 hover:text-white transition-colors cursor-default opacity-50">
                   <SkipBack size={17} />
                 </button>
                 <button
-                  onClick={() => setIsPlaying(!isPlaying)}
+                  onClick={handlePlayPause}
                   className="w-11 h-11 rounded-full flex items-center justify-center
                              transition-all hover:scale-105"
                   style={{ background: "linear-gradient(135deg,#f97316,#ef4444)" }}
@@ -572,44 +650,81 @@ export function AIStudio() {
                     : <Play size={18} className="ml-0.5" />
                   }
                 </button>
-                <button className="w-8 h-8 flex items-center justify-center text-white/30 hover:text-white transition-colors">
+                <button className="w-8 h-8 flex items-center justify-center text-white/30 hover:text-white transition-colors cursor-default opacity-50">
                   <SkipForward size={17} />
                 </button>
               </div>
               {/* Volume — shown on mobile next to controls */}
               <div className="flex items-center gap-2 text-white/30 sm:hidden">
                 <Volume2 size={15} />
-                <div className="w-16 h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }}>
-                  <div className="h-full w-3/4 rounded-full" style={{ background: "rgba(255,255,255,0.25)" }} />
-                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                  className="w-16 h-1.5 rounded-full cursor-pointer accent-orange-500"
+                  style={{
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                    background: `linear-gradient(to right, rgb(249,115,22) 0%, rgb(249,115,22) ${volume * 100}%, rgba(255,255,255,0.1) ${volume * 100}%, rgba(255,255,255,0.1) 100%)`,
+                  }}
+                />
               </div>
             </div>
 
-            <span className="hidden sm:block text-sm text-white/40 tabular-nums">01:12</span>
+            <span className="hidden sm:block text-sm text-white/40 tabular-nums">
+              {Math.floor(currentTime / 60)}:{String(Math.floor(currentTime % 60)).padStart(2, '0')}
+            </span>
 
             <div className="flex items-center gap-2 flex-1">
-              <span className="text-xs text-white/40 tabular-nums sm:hidden">01:12</span>
-              <div className="flex-1 h-1.5 rounded-full relative cursor-pointer"
-                style={{ background: "rgba(255,255,255,0.1)" }}>
+              <span className="text-xs text-white/40 tabular-nums sm:hidden">
+                {Math.floor(currentTime / 60)}:{String(Math.floor(currentTime % 60)).padStart(2, '0')}
+              </span>
+              <div
+                className="flex-1 h-1.5 rounded-full relative cursor-pointer"
+                onClick={handleProgressChange}
+                style={{ background: "rgba(255,255,255,0.1)" }}
+              >
                 <div
-                  className="absolute inset-y-0 left-0 w-1/3 rounded-full"
-                  style={{ background: "linear-gradient(to right,#f97316,#ef4444)" }}
+                  className="absolute inset-y-0 left-0 w-1/3 rounded-full transition-all"
+                  style={{
+                    width: `${duration ? (currentTime / duration) * 100 : 0}%`,
+                    background: "linear-gradient(to right,#f97316,#ef4444)",
+                  }}
                 />
                 <div
-                  className="absolute top-1/2 left-1/3 -translate-y-1/2 -translate-x-1/2
-                             w-3 h-3 rounded-full bg-white shadow"
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2
+                             w-3 h-3 rounded-full bg-white shadow transition-all"
+                  style={{ left: `${duration ? (currentTime / duration) * 100 : 0}%` }}
                 />
               </div>
-              <span className="text-xs text-white/40 tabular-nums sm:hidden">03:45</span>
+              <span className="text-xs text-white/40 tabular-nums sm:hidden">
+                {Math.floor(duration / 60)}:{String(Math.floor(duration % 60)).padStart(2, '0')}
+              </span>
             </div>
 
-            <span className="hidden sm:block text-sm text-white/40 tabular-nums">03:45</span>
+            <span className="hidden sm:block text-sm text-white/40 tabular-nums">
+              {Math.floor(duration / 60)}:{String(Math.floor(duration % 60)).padStart(2, '0')}
+            </span>
 
             <div className="hidden sm:flex items-center gap-2 text-white/30">
               <Volume2 size={16} />
-              <div className="w-20 h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }}>
-                <div className="h-full w-3/4 rounded-full" style={{ background: "rgba(255,255,255,0.25)" }} />
-              </div>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={handleVolumeChange}
+                className="w-20 h-1.5 rounded-full cursor-pointer accent-orange-500"
+                style={{
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  background: `linear-gradient(to right, rgb(249,115,22) 0%, rgb(249,115,22) ${volume * 100}%, rgba(255,255,255,0.1) ${volume * 100}%, rgba(255,255,255,0.1) 100%)`,
+                }}
+              />
             </div>
           </div>
         </div>

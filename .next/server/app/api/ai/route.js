@@ -34,6 +34,17 @@ module.exports = require("next/dist/compiled/next-server/app-route.runtime.dev.j
 
 /***/ }),
 
+/***/ "assert":
+/*!*************************!*\
+  !*** external "assert" ***!
+  \*************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("assert");
+
+/***/ }),
+
 /***/ "buffer":
 /*!*************************!*\
   !*** external "buffer" ***!
@@ -42,6 +53,17 @@ module.exports = require("next/dist/compiled/next-server/app-route.runtime.dev.j
 
 "use strict";
 module.exports = require("buffer");
+
+/***/ }),
+
+/***/ "child_process":
+/*!********************************!*\
+  !*** external "child_process" ***!
+  \********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("child_process");
 
 /***/ }),
 
@@ -78,6 +100,17 @@ module.exports = require("fs");
 
 /***/ }),
 
+/***/ "fs/promises":
+/*!******************************!*\
+  !*** external "fs/promises" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs/promises");
+
+/***/ }),
+
 /***/ "http":
 /*!***********************!*\
   !*** external "http" ***!
@@ -111,6 +144,17 @@ module.exports = require("net");
 
 /***/ }),
 
+/***/ "node:buffer":
+/*!******************************!*\
+  !*** external "node:buffer" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:buffer");
+
+/***/ }),
+
 /***/ "node:fs":
 /*!**************************!*\
   !*** external "node:fs" ***!
@@ -119,6 +163,61 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:fs");
+
+/***/ }),
+
+/***/ "node:http":
+/*!****************************!*\
+  !*** external "node:http" ***!
+  \****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:http");
+
+/***/ }),
+
+/***/ "node:https":
+/*!*****************************!*\
+  !*** external "node:https" ***!
+  \*****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:https");
+
+/***/ }),
+
+/***/ "node:net":
+/*!***************************!*\
+  !*** external "node:net" ***!
+  \***************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:net");
+
+/***/ }),
+
+/***/ "node:path":
+/*!****************************!*\
+  !*** external "node:path" ***!
+  \****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
+
+/***/ }),
+
+/***/ "node:process":
+/*!*******************************!*\
+  !*** external "node:process" ***!
+  \*******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:process");
 
 /***/ }),
 
@@ -133,6 +232,17 @@ module.exports = require("node:stream");
 
 /***/ }),
 
+/***/ "node:stream/promises":
+/*!***************************************!*\
+  !*** external "node:stream/promises" ***!
+  \***************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:stream/promises");
+
+/***/ }),
+
 /***/ "node:stream/web":
 /*!**********************************!*\
   !*** external "node:stream/web" ***!
@@ -141,6 +251,50 @@ module.exports = require("node:stream");
 
 "use strict";
 module.exports = require("node:stream/web");
+
+/***/ }),
+
+/***/ "node:url":
+/*!***************************!*\
+  !*** external "node:url" ***!
+  \***************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:url");
+
+/***/ }),
+
+/***/ "node:util":
+/*!****************************!*\
+  !*** external "node:util" ***!
+  \****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:util");
+
+/***/ }),
+
+/***/ "node:zlib":
+/*!****************************!*\
+  !*** external "node:zlib" ***!
+  \****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:zlib");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("os");
 
 /***/ }),
 
@@ -155,14 +309,25 @@ module.exports = require("path");
 
 /***/ }),
 
-/***/ "punycode":
-/*!***************************!*\
-  !*** external "punycode" ***!
-  \***************************/
+/***/ "process":
+/*!**************************!*\
+  !*** external "process" ***!
+  \**************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("punycode");
+module.exports = require("process");
+
+/***/ }),
+
+/***/ "querystring":
+/*!******************************!*\
+  !*** external "querystring" ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("querystring");
 
 /***/ }),
 
@@ -196,6 +361,17 @@ module.exports = require("stream/web");
 
 "use strict";
 module.exports = require("tls");
+
+/***/ }),
+
+/***/ "tty":
+/*!**********************!*\
+  !*** external "tty" ***!
+  \**********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("tty");
 
 /***/ }),
 
@@ -281,7 +457,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n/* harmony import */ var assemblyai__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! assemblyai */ \"(rsc)/./node_modules/assemblyai/dist/node.mjs\");\n/* harmony import */ var groq_sdk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! groq-sdk */ \"(rsc)/./node_modules/groq-sdk/index.mjs\");\n/* harmony import */ var _lib_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/data */ \"(rsc)/./lib/data.ts\");\n\n\n\n\nconst assembly = new assemblyai__WEBPACK_IMPORTED_MODULE_1__.AssemblyAI({\n    apiKey: process.env.ASSEMBLYAI_API_KEY\n});\nconst groq = new groq_sdk__WEBPACK_IMPORTED_MODULE_3__[\"default\"]({\n    apiKey: process.env.GROQ_API_KEY\n});\nasync function POST(req) {\n    const contentType = req.headers.get(\"content-type\") || \"\";\n    console.log(\"Received AI API request\");\n    try {\n        if (contentType.includes(\"multipart/form-data\")) {\n            const formData = await req.formData();\n            const file = formData.get(\"audio\");\n            const type = formData.get(\"type\");\n            const useMock = formData.get(\"mock\") === \"true\";\n            if (!file || type !== \"transcribe_audio\") {\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    error: \"Invalid file or type\"\n                }, {\n                    status: 400\n                });\n            }\n            if (!process.env.ASSEMBLYAI_API_KEY && !useMock) {\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    error: \"ASSEMBLYAI_API_KEY not set\"\n                }, {\n                    status: 500\n                });\n            }\n            try {\n                let transcription;\n                if (useMock) {\n                    // Mock transcription for testing\n                    transcription = _lib_data__WEBPACK_IMPORTED_MODULE_2__.SAMPLE_RAW_LYRICS;\n                    console.log(\"Using mock transcription:\", transcription);\n                } else {\n                    // AssemblyAI async transcription; SDK uploads local/file input for you.\n                    const transcript = await assembly.transcripts.transcribe({\n                        audio: file,\n                        speech_models: [\n                            \"universal-2\"\n                        ]\n                    });\n                    if (!transcript.text?.trim()) {\n                        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                            error: \"Empty transcription returned\"\n                        }, {\n                            status: 502\n                        });\n                    }\n                    transcription = transcript.text.trim();\n                    console.log(\"Transcription successful:\", transcription);\n                }\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    transcription,\n                    provider: useMock ? \"mock\" : \"assemblyai\"\n                });\n            } catch (error) {\n                console.error(\"AssemblyAI transcription error:\", error);\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    error: \"Transcription failed\",\n                    provider: \"assemblyai\",\n                    details: error?.response?.data?.error || error?.message || \"Unknown AssemblyAI error\"\n                }, {\n                    status: 502\n                });\n            }\n        }\n        const { type, payload } = await req.json();\n        const apiKey = process.env.GROQ_API_KEY;\n        if (!apiKey) {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"GROQ_API_KEY not set\"\n            }, {\n                status: 500\n            });\n        }\n        let prompt = \"\";\n        if (type === \"structure_lyrics\") {\n            prompt = `\nAnalyze these raw vocal transcription lyrics and structure them into a professional song format with proper sections.\n\nAvailable section tags (use only these):\n[INTRO]\n[VERSE 1]\n[PRE-CHORUS]\n[CHORUS]\n[POST-CHORUS]\n[VERSE 2]\n[BRIDGE]\n[OUTRO]\n[HOOK] (if applicable)\n\nGuidelines:\n- Return ONLY the structured lyrics with section tags\n- No explanations or additional text\n- Keep original wording as much as possible, but clean up obvious transcription errors\n- Each lyric line on its own line\n- Group similar repeating sections under the same tag (e.g., multiple CHORUS sections)\n- Use line breaks between sections\n- If lyrics are short, use fewer sections\n- Capitalize the first letter of each line appropriately\n- Infer the most logical song structure based on content and repetition\n\nRaw lyrics:\n${payload?.rawLyrics ?? \"\"}\n      `.trim();\n        } else if (type === \"generate_pitch\") {\n            prompt = `\nWrite a short, compelling playlist submission pitch in 2-3 sentences max.\n\nTrack: ${payload?.trackName ?? \"\"}\nPlaylist: ${payload?.playlistName ?? \"\"}\nCurator: ${payload?.curator ?? \"\"}\nDescription: ${payload?.trackDescription ?? \"\"}\n\nReturn only the pitch text.\n      `.trim();\n        } else {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"Unknown type\"\n            }, {\n                status: 400\n            });\n        }\n        const response = await groq.chat.completions.create({\n            model: \"openai/gpt-oss-20b\",\n            messages: [\n                {\n                    role: \"user\",\n                    content: prompt\n                }\n            ],\n            max_tokens: 1500\n        });\n        if (!response.choices || response.choices.length === 0) {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"Groq request failed\",\n                provider: \"groq\",\n                details: \"No response from Groq\"\n            }, {\n                status: 502\n            });\n        }\n        const text = response.choices[0].message.content ?? \"\";\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            text\n        });\n    } catch (error) {\n        console.error(\"AI route error:\", error);\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            error: \"Internal server error\"\n        }, {\n            status: 500\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvYXBpL2FpL3JvdXRlLnRzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7O0FBQXdEO0FBQ2hCO0FBQ1o7QUFDbUI7QUFFL0MsTUFBTUksV0FBVyxJQUFJSCxrREFBVUEsQ0FBQztJQUM5QkksUUFBUUMsUUFBUUMsR0FBRyxDQUFDQyxrQkFBa0I7QUFDeEM7QUFFQSxNQUFNQyxPQUFPLElBQUlQLGdEQUFJQSxDQUFDO0lBQ3BCRyxRQUFRQyxRQUFRQyxHQUFHLENBQUNHLFlBQVk7QUFDbEM7QUFFTyxlQUFlQyxLQUFLQyxHQUFnQjtJQUN6QyxNQUFNQyxjQUFjRCxJQUFJRSxPQUFPLENBQUNDLEdBQUcsQ0FBQyxtQkFBbUI7SUFDdkRDLFFBQVFDLEdBQUcsQ0FBQztJQUVaLElBQUk7UUFDRixJQUFJSixZQUFZSyxRQUFRLENBQUMsd0JBQXdCO1lBQy9DLE1BQU1DLFdBQVcsTUFBTVAsSUFBSU8sUUFBUTtZQUNuQyxNQUFNQyxPQUFPRCxTQUFTSixHQUFHLENBQUM7WUFDMUIsTUFBTU0sT0FBT0YsU0FBU0osR0FBRyxDQUFDO1lBQzFCLE1BQU1PLFVBQVVILFNBQVNKLEdBQUcsQ0FBQyxZQUFZO1lBRXpDLElBQUksQ0FBQ0ssUUFBUUMsU0FBUyxvQkFBb0I7Z0JBQ3hDLE9BQU9yQixxREFBWUEsQ0FBQ3VCLElBQUksQ0FDdEI7b0JBQUVDLE9BQU87Z0JBQXVCLEdBQ2hDO29CQUFFQyxRQUFRO2dCQUFJO1lBRWxCO1lBRUEsSUFBSSxDQUFDbkIsUUFBUUMsR0FBRyxDQUFDQyxrQkFBa0IsSUFBSSxDQUFDYyxTQUFTO2dCQUMvQyxPQUFPdEIscURBQVlBLENBQUN1QixJQUFJLENBQ3RCO29CQUFFQyxPQUFPO2dCQUE2QixHQUN0QztvQkFBRUMsUUFBUTtnQkFBSTtZQUVsQjtZQUVBLElBQUk7Z0JBQ0YsSUFBSUM7Z0JBRUosSUFBSUosU0FBUztvQkFDWCxpQ0FBaUM7b0JBQ2pDSSxnQkFBZ0J2Qix3REFBaUJBO29CQUNqQ2EsUUFBUUMsR0FBRyxDQUFDLDZCQUE2QlM7Z0JBQzNDLE9BQU87b0JBQ0wsd0VBQXdFO29CQUN4RSxNQUFNQyxhQUFhLE1BQU12QixTQUFTd0IsV0FBVyxDQUFDQyxVQUFVLENBQUM7d0JBQ3ZEQyxPQUFPVjt3QkFDUFcsZUFBZTs0QkFBQzt5QkFBYztvQkFLaEM7b0JBRUEsSUFBSSxDQUFDSixXQUFXSyxJQUFJLEVBQUVDLFFBQVE7d0JBQzVCLE9BQU9qQyxxREFBWUEsQ0FBQ3VCLElBQUksQ0FDdEI7NEJBQUVDLE9BQU87d0JBQStCLEdBQ3hDOzRCQUFFQyxRQUFRO3dCQUFJO29CQUVsQjtvQkFFQUMsZ0JBQWdCQyxXQUFXSyxJQUFJLENBQUNDLElBQUk7b0JBQ3BDakIsUUFBUUMsR0FBRyxDQUFDLDZCQUE2QlM7Z0JBQzNDO2dCQUVBLE9BQU8xQixxREFBWUEsQ0FBQ3VCLElBQUksQ0FBQztvQkFDdkJHO29CQUNBUSxVQUFVWixVQUFVLFNBQVM7Z0JBQy9CO1lBQ0YsRUFBRSxPQUFPRSxPQUFZO2dCQUNuQlIsUUFBUVEsS0FBSyxDQUFDLG1DQUFtQ0E7Z0JBRWpELE9BQU94QixxREFBWUEsQ0FBQ3VCLElBQUksQ0FDdEI7b0JBQ0VDLE9BQU87b0JBQ1BVLFVBQVU7b0JBQ1ZDLFNBQ0VYLE9BQU9ZLFVBQVVDLE1BQU1iLFNBQ3ZCQSxPQUFPYyxXQUNQO2dCQUNKLEdBQ0E7b0JBQUViLFFBQVE7Z0JBQUk7WUFFbEI7UUFDRjtRQUVBLE1BQU0sRUFBRUosSUFBSSxFQUFFa0IsT0FBTyxFQUFFLEdBQUcsTUFBTTNCLElBQUlXLElBQUk7UUFFeEMsTUFBTWxCLFNBQVNDLFFBQVFDLEdBQUcsQ0FBQ0csWUFBWTtRQUN2QyxJQUFJLENBQUNMLFFBQVE7WUFDWCxPQUFPTCxxREFBWUEsQ0FBQ3VCLElBQUksQ0FDdEI7Z0JBQUVDLE9BQU87WUFBdUIsR0FDaEM7Z0JBQUVDLFFBQVE7WUFBSTtRQUVsQjtRQUVBLElBQUllLFNBQVM7UUFFYixJQUFJbkIsU0FBUyxvQkFBb0I7WUFDL0JtQixTQUFTLENBQUM7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBMEJoQixFQUFFRCxTQUFTRSxhQUFhLEdBQUc7TUFDckIsQ0FBQyxDQUFDUixJQUFJO1FBQ1IsT0FBTyxJQUFJWixTQUFTLGtCQUFrQjtZQUNwQ21CLFNBQVMsQ0FBQzs7O09BR1QsRUFBRUQsU0FBU0csYUFBYSxHQUFHO1VBQ3hCLEVBQUVILFNBQVNJLGdCQUFnQixHQUFHO1NBQy9CLEVBQUVKLFNBQVNLLFdBQVcsR0FBRzthQUNyQixFQUFFTCxTQUFTTSxvQkFBb0IsR0FBRzs7O01BR3pDLENBQUMsQ0FBQ1osSUFBSTtRQUNSLE9BQU87WUFDTCxPQUFPakMscURBQVlBLENBQUN1QixJQUFJLENBQUM7Z0JBQUVDLE9BQU87WUFBZSxHQUFHO2dCQUFFQyxRQUFRO1lBQUk7UUFDcEU7UUFFQSxNQUFNVyxXQUFXLE1BQU0zQixLQUFLcUMsSUFBSSxDQUFDQyxXQUFXLENBQUNDLE1BQU0sQ0FBQztZQUNsREMsT0FBTztZQUNQQyxVQUFVO2dCQUFDO29CQUFFQyxNQUFNO29CQUFRQyxTQUFTWjtnQkFBTzthQUFFO1lBQzdDYSxZQUFZO1FBQ2Q7UUFFQSxJQUFJLENBQUNqQixTQUFTa0IsT0FBTyxJQUFJbEIsU0FBU2tCLE9BQU8sQ0FBQ0MsTUFBTSxLQUFLLEdBQUc7WUFDdEQsT0FBT3ZELHFEQUFZQSxDQUFDdUIsSUFBSSxDQUN0QjtnQkFDRUMsT0FBTztnQkFDUFUsVUFBVTtnQkFDVkMsU0FBUztZQUNYLEdBQ0E7Z0JBQUVWLFFBQVE7WUFBSTtRQUVsQjtRQUVBLE1BQU1PLE9BQU9JLFNBQVNrQixPQUFPLENBQUMsRUFBRSxDQUFDaEIsT0FBTyxDQUFDYyxPQUFPLElBQUk7UUFFcEQsT0FBT3BELHFEQUFZQSxDQUFDdUIsSUFBSSxDQUFDO1lBQUVTO1FBQUs7SUFDbEMsRUFBRSxPQUFPUixPQUFPO1FBQ2RSLFFBQVFRLEtBQUssQ0FBQyxtQkFBbUJBO1FBQ2pDLE9BQU94QixxREFBWUEsQ0FBQ3VCLElBQUksQ0FDdEI7WUFBRUMsT0FBTztRQUF3QixHQUNqQztZQUFFQyxRQUFRO1FBQUk7SUFFbEI7QUFDRiIsInNvdXJjZXMiOlsid2VicGFjazovL2FydGlzdC1vcy8uL2FwcC9hcGkvYWkvcm91dGUudHM/MGIyNCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZXh0UmVxdWVzdCwgTmV4dFJlc3BvbnNlIH0gZnJvbSBcIm5leHQvc2VydmVyXCI7XG5pbXBvcnQgeyBBc3NlbWJseUFJIH0gZnJvbSBcImFzc2VtYmx5YWlcIjtcbmltcG9ydCBHcm9xIGZyb20gXCJncm9xLXNka1wiO1xuaW1wb3J0IHsgU0FNUExFX1JBV19MWVJJQ1MgfSBmcm9tIFwiQC9saWIvZGF0YVwiO1xuXG5jb25zdCBhc3NlbWJseSA9IG5ldyBBc3NlbWJseUFJKHtcbiAgYXBpS2V5OiBwcm9jZXNzLmVudi5BU1NFTUJMWUFJX0FQSV9LRVkhLFxufSk7XG5cbmNvbnN0IGdyb3EgPSBuZXcgR3JvcSh7XG4gIGFwaUtleTogcHJvY2Vzcy5lbnYuR1JPUV9BUElfS0VZISxcbn0pO1xuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gUE9TVChyZXE6IE5leHRSZXF1ZXN0KSB7XG4gIGNvbnN0IGNvbnRlbnRUeXBlID0gcmVxLmhlYWRlcnMuZ2V0KFwiY29udGVudC10eXBlXCIpIHx8IFwiXCI7XG4gIGNvbnNvbGUubG9nKFwiUmVjZWl2ZWQgQUkgQVBJIHJlcXVlc3RcIik7XG5cbiAgdHJ5IHtcbiAgICBpZiAoY29udGVudFR5cGUuaW5jbHVkZXMoXCJtdWx0aXBhcnQvZm9ybS1kYXRhXCIpKSB7XG4gICAgICBjb25zdCBmb3JtRGF0YSA9IGF3YWl0IHJlcS5mb3JtRGF0YSgpO1xuICAgICAgY29uc3QgZmlsZSA9IGZvcm1EYXRhLmdldChcImF1ZGlvXCIpIGFzIEZpbGUgfCBudWxsO1xuICAgICAgY29uc3QgdHlwZSA9IGZvcm1EYXRhLmdldChcInR5cGVcIikgYXMgc3RyaW5nIHwgbnVsbDtcbiAgICAgIGNvbnN0IHVzZU1vY2sgPSBmb3JtRGF0YS5nZXQoXCJtb2NrXCIpID09PSBcInRydWVcIjtcblxuICAgICAgaWYgKCFmaWxlIHx8IHR5cGUgIT09IFwidHJhbnNjcmliZV9hdWRpb1wiKSB7XG4gICAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbihcbiAgICAgICAgICB7IGVycm9yOiBcIkludmFsaWQgZmlsZSBvciB0eXBlXCIgfSxcbiAgICAgICAgICB7IHN0YXR1czogNDAwIH1cbiAgICAgICAgKTtcbiAgICAgIH1cblxuICAgICAgaWYgKCFwcm9jZXNzLmVudi5BU1NFTUJMWUFJX0FQSV9LRVkgJiYgIXVzZU1vY2spIHtcbiAgICAgICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKFxuICAgICAgICAgIHsgZXJyb3I6IFwiQVNTRU1CTFlBSV9BUElfS0VZIG5vdCBzZXRcIiB9LFxuICAgICAgICAgIHsgc3RhdHVzOiA1MDAgfVxuICAgICAgICApO1xuICAgICAgfVxuXG4gICAgICB0cnkge1xuICAgICAgICBsZXQgdHJhbnNjcmlwdGlvbjogc3RyaW5nO1xuXG4gICAgICAgIGlmICh1c2VNb2NrKSB7XG4gICAgICAgICAgLy8gTW9jayB0cmFuc2NyaXB0aW9uIGZvciB0ZXN0aW5nXG4gICAgICAgICAgdHJhbnNjcmlwdGlvbiA9IFNBTVBMRV9SQVdfTFlSSUNTO1xuICAgICAgICAgIGNvbnNvbGUubG9nKFwiVXNpbmcgbW9jayB0cmFuc2NyaXB0aW9uOlwiLCB0cmFuc2NyaXB0aW9uKTtcbiAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAvLyBBc3NlbWJseUFJIGFzeW5jIHRyYW5zY3JpcHRpb247IFNESyB1cGxvYWRzIGxvY2FsL2ZpbGUgaW5wdXQgZm9yIHlvdS5cbiAgICAgICAgICBjb25zdCB0cmFuc2NyaXB0ID0gYXdhaXQgYXNzZW1ibHkudHJhbnNjcmlwdHMudHJhbnNjcmliZSh7XG4gICAgICAgICAgICBhdWRpbzogZmlsZSxcbiAgICAgICAgICAgIHNwZWVjaF9tb2RlbHM6IFtcInVuaXZlcnNhbC0yXCJdLFxuICAgICAgICAgICAgLy8gT3B0aW9uYWw6XG4gICAgICAgICAgICAvLyBsYW5ndWFnZV9kZXRlY3Rpb246IHRydWUsXG4gICAgICAgICAgICAvLyBmb3JtYXRfdGV4dDogdHJ1ZSxcbiAgICAgICAgICAgIC8vIHB1bmN0dWF0ZTogdHJ1ZSxcbiAgICAgICAgICB9KTtcblxuICAgICAgICAgIGlmICghdHJhbnNjcmlwdC50ZXh0Py50cmltKCkpIHtcbiAgICAgICAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbihcbiAgICAgICAgICAgICAgeyBlcnJvcjogXCJFbXB0eSB0cmFuc2NyaXB0aW9uIHJldHVybmVkXCIgfSxcbiAgICAgICAgICAgICAgeyBzdGF0dXM6IDUwMiB9XG4gICAgICAgICAgICApO1xuICAgICAgICAgIH1cblxuICAgICAgICAgIHRyYW5zY3JpcHRpb24gPSB0cmFuc2NyaXB0LnRleHQudHJpbSgpO1xuICAgICAgICAgIGNvbnNvbGUubG9nKFwiVHJhbnNjcmlwdGlvbiBzdWNjZXNzZnVsOlwiLCB0cmFuc2NyaXB0aW9uKTtcbiAgICAgICAgfVxuXG4gICAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7XG4gICAgICAgICAgdHJhbnNjcmlwdGlvbixcbiAgICAgICAgICBwcm92aWRlcjogdXNlTW9jayA/IFwibW9ja1wiIDogXCJhc3NlbWJseWFpXCIsXG4gICAgICAgIH0pO1xuICAgICAgfSBjYXRjaCAoZXJyb3I6IGFueSkge1xuICAgICAgICBjb25zb2xlLmVycm9yKFwiQXNzZW1ibHlBSSB0cmFuc2NyaXB0aW9uIGVycm9yOlwiLCBlcnJvcik7XG5cbiAgICAgICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKFxuICAgICAgICAgIHtcbiAgICAgICAgICAgIGVycm9yOiBcIlRyYW5zY3JpcHRpb24gZmFpbGVkXCIsXG4gICAgICAgICAgICBwcm92aWRlcjogXCJhc3NlbWJseWFpXCIsXG4gICAgICAgICAgICBkZXRhaWxzOlxuICAgICAgICAgICAgICBlcnJvcj8ucmVzcG9uc2U/LmRhdGE/LmVycm9yIHx8XG4gICAgICAgICAgICAgIGVycm9yPy5tZXNzYWdlIHx8XG4gICAgICAgICAgICAgIFwiVW5rbm93biBBc3NlbWJseUFJIGVycm9yXCIsXG4gICAgICAgICAgfSxcbiAgICAgICAgICB7IHN0YXR1czogNTAyIH1cbiAgICAgICAgKTtcbiAgICAgIH1cbiAgICB9XG5cbiAgICBjb25zdCB7IHR5cGUsIHBheWxvYWQgfSA9IGF3YWl0IHJlcS5qc29uKCk7XG5cbiAgICBjb25zdCBhcGlLZXkgPSBwcm9jZXNzLmVudi5HUk9RX0FQSV9LRVk7XG4gICAgaWYgKCFhcGlLZXkpIHtcbiAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbihcbiAgICAgICAgeyBlcnJvcjogXCJHUk9RX0FQSV9LRVkgbm90IHNldFwiIH0sXG4gICAgICAgIHsgc3RhdHVzOiA1MDAgfVxuICAgICAgKTtcbiAgICB9XG5cbiAgICBsZXQgcHJvbXB0ID0gXCJcIjtcblxuICAgIGlmICh0eXBlID09PSBcInN0cnVjdHVyZV9seXJpY3NcIikge1xuICAgICAgcHJvbXB0ID0gYFxuQW5hbHl6ZSB0aGVzZSByYXcgdm9jYWwgdHJhbnNjcmlwdGlvbiBseXJpY3MgYW5kIHN0cnVjdHVyZSB0aGVtIGludG8gYSBwcm9mZXNzaW9uYWwgc29uZyBmb3JtYXQgd2l0aCBwcm9wZXIgc2VjdGlvbnMuXG5cbkF2YWlsYWJsZSBzZWN0aW9uIHRhZ3MgKHVzZSBvbmx5IHRoZXNlKTpcbltJTlRST11cbltWRVJTRSAxXVxuW1BSRS1DSE9SVVNdXG5bQ0hPUlVTXVxuW1BPU1QtQ0hPUlVTXVxuW1ZFUlNFIDJdXG5bQlJJREdFXVxuW09VVFJPXVxuW0hPT0tdIChpZiBhcHBsaWNhYmxlKVxuXG5HdWlkZWxpbmVzOlxuLSBSZXR1cm4gT05MWSB0aGUgc3RydWN0dXJlZCBseXJpY3Mgd2l0aCBzZWN0aW9uIHRhZ3Ncbi0gTm8gZXhwbGFuYXRpb25zIG9yIGFkZGl0aW9uYWwgdGV4dFxuLSBLZWVwIG9yaWdpbmFsIHdvcmRpbmcgYXMgbXVjaCBhcyBwb3NzaWJsZSwgYnV0IGNsZWFuIHVwIG9idmlvdXMgdHJhbnNjcmlwdGlvbiBlcnJvcnNcbi0gRWFjaCBseXJpYyBsaW5lIG9uIGl0cyBvd24gbGluZVxuLSBHcm91cCBzaW1pbGFyIHJlcGVhdGluZyBzZWN0aW9ucyB1bmRlciB0aGUgc2FtZSB0YWcgKGUuZy4sIG11bHRpcGxlIENIT1JVUyBzZWN0aW9ucylcbi0gVXNlIGxpbmUgYnJlYWtzIGJldHdlZW4gc2VjdGlvbnNcbi0gSWYgbHlyaWNzIGFyZSBzaG9ydCwgdXNlIGZld2VyIHNlY3Rpb25zXG4tIENhcGl0YWxpemUgdGhlIGZpcnN0IGxldHRlciBvZiBlYWNoIGxpbmUgYXBwcm9wcmlhdGVseVxuLSBJbmZlciB0aGUgbW9zdCBsb2dpY2FsIHNvbmcgc3RydWN0dXJlIGJhc2VkIG9uIGNvbnRlbnQgYW5kIHJlcGV0aXRpb25cblxuUmF3IGx5cmljczpcbiR7cGF5bG9hZD8ucmF3THlyaWNzID8/IFwiXCJ9XG4gICAgICBgLnRyaW0oKTtcbiAgICB9IGVsc2UgaWYgKHR5cGUgPT09IFwiZ2VuZXJhdGVfcGl0Y2hcIikge1xuICAgICAgcHJvbXB0ID0gYFxuV3JpdGUgYSBzaG9ydCwgY29tcGVsbGluZyBwbGF5bGlzdCBzdWJtaXNzaW9uIHBpdGNoIGluIDItMyBzZW50ZW5jZXMgbWF4LlxuXG5UcmFjazogJHtwYXlsb2FkPy50cmFja05hbWUgPz8gXCJcIn1cblBsYXlsaXN0OiAke3BheWxvYWQ/LnBsYXlsaXN0TmFtZSA/PyBcIlwifVxuQ3VyYXRvcjogJHtwYXlsb2FkPy5jdXJhdG9yID8/IFwiXCJ9XG5EZXNjcmlwdGlvbjogJHtwYXlsb2FkPy50cmFja0Rlc2NyaXB0aW9uID8/IFwiXCJ9XG5cblJldHVybiBvbmx5IHRoZSBwaXRjaCB0ZXh0LlxuICAgICAgYC50cmltKCk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IGVycm9yOiBcIlVua25vd24gdHlwZVwiIH0sIHsgc3RhdHVzOiA0MDAgfSk7XG4gICAgfVxuXG4gICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBncm9xLmNoYXQuY29tcGxldGlvbnMuY3JlYXRlKHtcbiAgICAgIG1vZGVsOiBcIm9wZW5haS9ncHQtb3NzLTIwYlwiLFxuICAgICAgbWVzc2FnZXM6IFt7IHJvbGU6IFwidXNlclwiLCBjb250ZW50OiBwcm9tcHQgfV0sXG4gICAgICBtYXhfdG9rZW5zOiAxNTAwLFxuICAgIH0pO1xuXG4gICAgaWYgKCFyZXNwb25zZS5jaG9pY2VzIHx8IHJlc3BvbnNlLmNob2ljZXMubGVuZ3RoID09PSAwKSB7XG4gICAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oXG4gICAgICAgIHtcbiAgICAgICAgICBlcnJvcjogXCJHcm9xIHJlcXVlc3QgZmFpbGVkXCIsXG4gICAgICAgICAgcHJvdmlkZXI6IFwiZ3JvcVwiLFxuICAgICAgICAgIGRldGFpbHM6IFwiTm8gcmVzcG9uc2UgZnJvbSBHcm9xXCIsXG4gICAgICAgIH0sXG4gICAgICAgIHsgc3RhdHVzOiA1MDIgfVxuICAgICAgKTtcbiAgICB9XG5cbiAgICBjb25zdCB0ZXh0ID0gcmVzcG9uc2UuY2hvaWNlc1swXS5tZXNzYWdlLmNvbnRlbnQgPz8gXCJcIjtcblxuICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IHRleHQgfSk7XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcihcIkFJIHJvdXRlIGVycm9yOlwiLCBlcnJvcik7XG4gICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKFxuICAgICAgeyBlcnJvcjogXCJJbnRlcm5hbCBzZXJ2ZXIgZXJyb3JcIiB9LFxuICAgICAgeyBzdGF0dXM6IDUwMCB9XG4gICAgKTtcbiAgfVxufSJdLCJuYW1lcyI6WyJOZXh0UmVzcG9uc2UiLCJBc3NlbWJseUFJIiwiR3JvcSIsIlNBTVBMRV9SQVdfTFlSSUNTIiwiYXNzZW1ibHkiLCJhcGlLZXkiLCJwcm9jZXNzIiwiZW52IiwiQVNTRU1CTFlBSV9BUElfS0VZIiwiZ3JvcSIsIkdST1FfQVBJX0tFWSIsIlBPU1QiLCJyZXEiLCJjb250ZW50VHlwZSIsImhlYWRlcnMiLCJnZXQiLCJjb25zb2xlIiwibG9nIiwiaW5jbHVkZXMiLCJmb3JtRGF0YSIsImZpbGUiLCJ0eXBlIiwidXNlTW9jayIsImpzb24iLCJlcnJvciIsInN0YXR1cyIsInRyYW5zY3JpcHRpb24iLCJ0cmFuc2NyaXB0IiwidHJhbnNjcmlwdHMiLCJ0cmFuc2NyaWJlIiwiYXVkaW8iLCJzcGVlY2hfbW9kZWxzIiwidGV4dCIsInRyaW0iLCJwcm92aWRlciIsImRldGFpbHMiLCJyZXNwb25zZSIsImRhdGEiLCJtZXNzYWdlIiwicGF5bG9hZCIsInByb21wdCIsInJhd0x5cmljcyIsInRyYWNrTmFtZSIsInBsYXlsaXN0TmFtZSIsImN1cmF0b3IiLCJ0cmFja0Rlc2NyaXB0aW9uIiwiY2hhdCIsImNvbXBsZXRpb25zIiwiY3JlYXRlIiwibW9kZWwiLCJtZXNzYWdlcyIsInJvbGUiLCJjb250ZW50IiwibWF4X3Rva2VucyIsImNob2ljZXMiLCJsZW5ndGgiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./app/api/ai/route.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n/* harmony import */ var assemblyai__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! assemblyai */ \"(rsc)/./node_modules/assemblyai/dist/node.mjs\");\n/* harmony import */ var _google_genai__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @google/genai */ \"(rsc)/./node_modules/@google/genai/dist/node/index.mjs\");\n/* harmony import */ var _lib_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/data */ \"(rsc)/./lib/data.ts\");\n\n\n\n\nconst assembly = new assemblyai__WEBPACK_IMPORTED_MODULE_1__.AssemblyAI({\n    apiKey: process.env.ASSEMBLYAI_API_KEY\n});\nconst ai = new _google_genai__WEBPACK_IMPORTED_MODULE_2__.GoogleGenAI({});\nasync function POST(req) {\n    const contentType = req.headers.get(\"content-type\") || \"\";\n    console.log(\"Received AI API request\");\n    try {\n        if (contentType.includes(\"multipart/form-data\")) {\n            const formData = await req.formData();\n            const file = formData.get(\"audio\");\n            const type = formData.get(\"type\");\n            const useMock = formData.get(\"mock\") === \"true\";\n            if (!file || type !== \"transcribe_audio\") {\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    error: \"Invalid file or type\"\n                }, {\n                    status: 400\n                });\n            }\n            if (!process.env.ASSEMBLYAI_API_KEY && !useMock) {\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    error: \"ASSEMBLYAI_API_KEY not set\"\n                }, {\n                    status: 500\n                });\n            }\n            try {\n                let transcription;\n                if (useMock) {\n                    // Mock transcription for testing\n                    transcription = _lib_data__WEBPACK_IMPORTED_MODULE_3__.SAMPLE_RAW_LYRICS;\n                    console.log(\"Using mock transcription:\", transcription);\n                } else {\n                    // AssemblyAI async transcription; SDK uploads local/file input for you.\n                    const transcript = await assembly.transcripts.transcribe({\n                        audio: file,\n                        speech_models: [\n                            \"universal-2\"\n                        ]\n                    });\n                    if (!transcript.text?.trim()) {\n                        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                            error: \"Empty transcription returned\"\n                        }, {\n                            status: 502\n                        });\n                    }\n                    transcription = transcript.text.trim();\n                    console.log(\"Transcription successful:\", transcription);\n                }\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    transcription,\n                    provider: useMock ? \"mock\" : \"assemblyai\"\n                });\n            } catch (error) {\n                console.error(\"AssemblyAI transcription error:\", error);\n                return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    error: \"Transcription failed\",\n                    provider: \"assemblyai\",\n                    details: error?.response?.data?.error || error?.message || \"Unknown AssemblyAI error\"\n                }, {\n                    status: 502\n                });\n            }\n        }\n        const { type, payload } = await req.json();\n        const apiKey = process.env.GEMINI_API_KEY;\n        if (!apiKey) {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"GEMINI_API_KEY not set\"\n            }, {\n                status: 500\n            });\n        }\n        let prompt = \"\";\n        if (type === \"structure_lyrics\") {\n            prompt = `\nAnalyze these raw vocal transcription lyrics and structure them into a professional song format with proper sections.\n\nAvailable section tags (use only these):\n[INTRO]\n[VERSE 1]\n[PRE-CHORUS]\n[CHORUS]\n[POST-CHORUS]\n[VERSE 2]\n[BRIDGE]\n[OUTRO]\n[HOOK] (if applicable)\n\nGuidelines:\n- Return ONLY the structured lyrics with section tags\n- No explanations or additional text\n- Keep original wording as much as possible, but clean up obvious transcription errors\n- Each lyric line on its own line\n- Group similar repeating sections under the same tag (e.g., multiple CHORUS sections)\n- Use line breaks between sections\n- If lyrics are short, use fewer sections\n- Capitalize the first letter of each line appropriately\n- Infer the most logical song structure based on content and repetition\n\nRaw lyrics:\n${payload?.rawLyrics ?? \"\"}\n      `.trim();\n        } else if (type === \"generate_pitch\") {\n            prompt = `\nWrite a short, compelling playlist submission pitch in 2-3 sentences max.\n\nTrack: ${payload?.trackName ?? \"\"}\nPlaylist: ${payload?.playlistName ?? \"\"}\nCurator: ${payload?.curator ?? \"\"}\nDescription: ${payload?.trackDescription ?? \"\"}\n\nReturn only the pitch text.\n      `.trim();\n        } else {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"Unknown type\"\n            }, {\n                status: 400\n            });\n        }\n        const response = await ai.models.generateContent({\n            model: \"gemini-3-flash-preview\",\n            contents: prompt\n        });\n        const text = response.text;\n        if (!text?.trim()) {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"Gemini request failed\",\n                provider: \"gemini\",\n                details: \"No response from Gemini\"\n            }, {\n                status: 502\n            });\n        }\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            text\n        });\n    } catch (error) {\n        console.error(\"AI route error:\", error);\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            error: \"Internal server error\",\n            details: error?.message\n        }, {\n            status: 500\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,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TUFDckIsQ0FBQyxDQUFDVCxJQUFJO1FBQ1IsT0FBTyxJQUFJWixTQUFTLGtCQUFrQjtZQUNwQ29CLFNBQVMsQ0FBQzs7O09BR1QsRUFBRUYsU0FBU0ksYUFBYSxHQUFHO1VBQ3hCLEVBQUVKLFNBQVNLLGdCQUFnQixHQUFHO1NBQy9CLEVBQUVMLFNBQVNNLFdBQVcsR0FBRzthQUNyQixFQUFFTixTQUFTTyxvQkFBb0IsR0FBRzs7O01BR3pDLENBQUMsQ0FBQ2IsSUFBSTtRQUNSLE9BQU87WUFDTCxPQUFPaEMscURBQVlBLENBQUNzQixJQUFJLENBQUM7Z0JBQUVDLE9BQU87WUFBZSxHQUFHO2dCQUFFQyxRQUFRO1lBQUk7UUFDcEU7UUFFQSxNQUFNVyxXQUFXLE1BQU0xQixHQUFHcUMsTUFBTSxDQUFDQyxlQUFlLENBQUM7WUFDL0NDLE9BQU87WUFDUEMsVUFBVVQ7UUFDWjtRQUVBLE1BQU1ULE9BQU9JLFNBQVNKLElBQUk7UUFFMUIsSUFBSSxDQUFDQSxNQUFNQyxRQUFRO1lBQ2pCLE9BQU9oQyxxREFBWUEsQ0FBQ3NCLElBQUksQ0FDdEI7Z0JBQ0VDLE9BQU87Z0JBQ1BVLFVBQVU7Z0JBQ1ZDLFNBQVM7WUFDWCxHQUNBO2dCQUFFVixRQUFRO1lBQUk7UUFFbEI7UUFFQSxPQUFPeEIscURBQVlBLENBQUNzQixJQUFJLENBQUM7WUFBRVM7UUFBSztJQUNsQyxFQUFFLE9BQU9SLE9BQU87UUFDZFIsUUFBUVEsS0FBSyxDQUFDLG1CQUFtQkE7UUFDakMsT0FBT3ZCLHFEQUFZQSxDQUFDc0IsSUFBSSxDQUN0QjtZQUFFQyxPQUFPO1lBQXlCVyxTQUFVWCxPQUFlYztRQUFRLEdBQ25FO1lBQUViLFFBQVE7UUFBSTtJQUVsQjtBQUNGIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vYXJ0aXN0LW9zLy4vYXBwL2FwaS9haS9yb3V0ZS50cz8wYjI0Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5leHRSZXF1ZXN0LCBOZXh0UmVzcG9uc2UgfSBmcm9tIFwibmV4dC9zZXJ2ZXJcIjtcbmltcG9ydCB7IEFzc2VtYmx5QUkgfSBmcm9tIFwiYXNzZW1ibHlhaVwiO1xuaW1wb3J0IHsgR29vZ2xlR2VuQUkgfSBmcm9tIFwiQGdvb2dsZS9nZW5haVwiO1xuaW1wb3J0IHsgU0FNUExFX1JBV19MWVJJQ1MgfSBmcm9tIFwiQC9saWIvZGF0YVwiO1xuXG5jb25zdCBhc3NlbWJseSA9IG5ldyBBc3NlbWJseUFJKHtcbiAgYXBpS2V5OiBwcm9jZXNzLmVudi5BU1NFTUJMWUFJX0FQSV9LRVkhLFxufSk7XG5cbmNvbnN0IGFpID0gbmV3IEdvb2dsZUdlbkFJKHt9KTtcblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIFBPU1QocmVxOiBOZXh0UmVxdWVzdCkge1xuICBjb25zdCBjb250ZW50VHlwZSA9IHJlcS5oZWFkZXJzLmdldChcImNvbnRlbnQtdHlwZVwiKSB8fCBcIlwiO1xuICBjb25zb2xlLmxvZyhcIlJlY2VpdmVkIEFJIEFQSSByZXF1ZXN0XCIpO1xuXG4gIHRyeSB7XG4gICAgaWYgKGNvbnRlbnRUeXBlLmluY2x1ZGVzKFwibXVsdGlwYXJ0L2Zvcm0tZGF0YVwiKSkge1xuICAgICAgY29uc3QgZm9ybURhdGEgPSBhd2FpdCByZXEuZm9ybURhdGEoKTtcbiAgICAgIGNvbnN0IGZpbGUgPSBmb3JtRGF0YS5nZXQoXCJhdWRpb1wiKSBhcyBGaWxlIHwgbnVsbDtcbiAgICAgIGNvbnN0IHR5cGUgPSBmb3JtRGF0YS5nZXQoXCJ0eXBlXCIpIGFzIHN0cmluZyB8IG51bGw7XG4gICAgICBjb25zdCB1c2VNb2NrID0gZm9ybURhdGEuZ2V0KFwibW9ja1wiKSA9PT0gXCJ0cnVlXCI7XG5cbiAgICAgIGlmICghZmlsZSB8fCB0eXBlICE9PSBcInRyYW5zY3JpYmVfYXVkaW9cIikge1xuICAgICAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oXG4gICAgICAgICAgeyBlcnJvcjogXCJJbnZhbGlkIGZpbGUgb3IgdHlwZVwiIH0sXG4gICAgICAgICAgeyBzdGF0dXM6IDQwMCB9XG4gICAgICAgICk7XG4gICAgICB9XG5cbiAgICAgIGlmICghcHJvY2Vzcy5lbnYuQVNTRU1CTFlBSV9BUElfS0VZICYmICF1c2VNb2NrKSB7XG4gICAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbihcbiAgICAgICAgICB7IGVycm9yOiBcIkFTU0VNQkxZQUlfQVBJX0tFWSBub3Qgc2V0XCIgfSxcbiAgICAgICAgICB7IHN0YXR1czogNTAwIH1cbiAgICAgICAgKTtcbiAgICAgIH1cblxuICAgICAgdHJ5IHtcbiAgICAgICAgbGV0IHRyYW5zY3JpcHRpb246IHN0cmluZztcblxuICAgICAgICBpZiAodXNlTW9jaykge1xuICAgICAgICAgIC8vIE1vY2sgdHJhbnNjcmlwdGlvbiBmb3IgdGVzdGluZ1xuICAgICAgICAgIHRyYW5zY3JpcHRpb24gPSBTQU1QTEVfUkFXX0xZUklDUztcbiAgICAgICAgICBjb25zb2xlLmxvZyhcIlVzaW5nIG1vY2sgdHJhbnNjcmlwdGlvbjpcIiwgdHJhbnNjcmlwdGlvbik7XG4gICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgLy8gQXNzZW1ibHlBSSBhc3luYyB0cmFuc2NyaXB0aW9uOyBTREsgdXBsb2FkcyBsb2NhbC9maWxlIGlucHV0IGZvciB5b3UuXG4gICAgICAgICAgY29uc3QgdHJhbnNjcmlwdCA9IGF3YWl0IGFzc2VtYmx5LnRyYW5zY3JpcHRzLnRyYW5zY3JpYmUoe1xuICAgICAgICAgICAgYXVkaW86IGZpbGUsXG4gICAgICAgICAgICBzcGVlY2hfbW9kZWxzOiBbXCJ1bml2ZXJzYWwtMlwiXSxcbiAgICAgICAgICAgIC8vIE9wdGlvbmFsOlxuICAgICAgICAgICAgLy8gbGFuZ3VhZ2VfZGV0ZWN0aW9uOiB0cnVlLFxuICAgICAgICAgICAgLy8gZm9ybWF0X3RleHQ6IHRydWUsXG4gICAgICAgICAgICAvLyBwdW5jdHVhdGU6IHRydWUsXG4gICAgICAgICAgfSk7XG5cbiAgICAgICAgICBpZiAoIXRyYW5zY3JpcHQudGV4dD8udHJpbSgpKSB7XG4gICAgICAgICAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oXG4gICAgICAgICAgICAgIHsgZXJyb3I6IFwiRW1wdHkgdHJhbnNjcmlwdGlvbiByZXR1cm5lZFwiIH0sXG4gICAgICAgICAgICAgIHsgc3RhdHVzOiA1MDIgfVxuICAgICAgICAgICAgKTtcbiAgICAgICAgICB9XG5cbiAgICAgICAgICB0cmFuc2NyaXB0aW9uID0gdHJhbnNjcmlwdC50ZXh0LnRyaW0oKTtcbiAgICAgICAgICBjb25zb2xlLmxvZyhcIlRyYW5zY3JpcHRpb24gc3VjY2Vzc2Z1bDpcIiwgdHJhbnNjcmlwdGlvbik7XG4gICAgICAgIH1cblxuICAgICAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oe1xuICAgICAgICAgIHRyYW5zY3JpcHRpb24sXG4gICAgICAgICAgcHJvdmlkZXI6IHVzZU1vY2sgPyBcIm1vY2tcIiA6IFwiYXNzZW1ibHlhaVwiLFxuICAgICAgICB9KTtcbiAgICAgIH0gY2F0Y2ggKGVycm9yOiBhbnkpIHtcbiAgICAgICAgY29uc29sZS5lcnJvcihcIkFzc2VtYmx5QUkgdHJhbnNjcmlwdGlvbiBlcnJvcjpcIiwgZXJyb3IpO1xuXG4gICAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbihcbiAgICAgICAgICB7XG4gICAgICAgICAgICBlcnJvcjogXCJUcmFuc2NyaXB0aW9uIGZhaWxlZFwiLFxuICAgICAgICAgICAgcHJvdmlkZXI6IFwiYXNzZW1ibHlhaVwiLFxuICAgICAgICAgICAgZGV0YWlsczpcbiAgICAgICAgICAgICAgZXJyb3I/LnJlc3BvbnNlPy5kYXRhPy5lcnJvciB8fFxuICAgICAgICAgICAgICBlcnJvcj8ubWVzc2FnZSB8fFxuICAgICAgICAgICAgICBcIlVua25vd24gQXNzZW1ibHlBSSBlcnJvclwiLFxuICAgICAgICAgIH0sXG4gICAgICAgICAgeyBzdGF0dXM6IDUwMiB9XG4gICAgICAgICk7XG4gICAgICB9XG4gICAgfVxuXG4gICAgY29uc3QgeyB0eXBlLCBwYXlsb2FkIH0gPSBhd2FpdCByZXEuanNvbigpO1xuXG4gICAgY29uc3QgYXBpS2V5ID0gcHJvY2Vzcy5lbnYuR0VNSU5JX0FQSV9LRVk7XG4gICAgaWYgKCFhcGlLZXkpIHtcbiAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbihcbiAgICAgICAgeyBlcnJvcjogXCJHRU1JTklfQVBJX0tFWSBub3Qgc2V0XCIgfSxcbiAgICAgICAgeyBzdGF0dXM6IDUwMCB9XG4gICAgICApO1xuICAgIH1cblxuICAgIGxldCBwcm9tcHQgPSBcIlwiO1xuXG4gICAgaWYgKHR5cGUgPT09IFwic3RydWN0dXJlX2x5cmljc1wiKSB7XG4gICAgICBwcm9tcHQgPSBgXG5BbmFseXplIHRoZXNlIHJhdyB2b2NhbCB0cmFuc2NyaXB0aW9uIGx5cmljcyBhbmQgc3RydWN0dXJlIHRoZW0gaW50byBhIHByb2Zlc3Npb25hbCBzb25nIGZvcm1hdCB3aXRoIHByb3BlciBzZWN0aW9ucy5cblxuQXZhaWxhYmxlIHNlY3Rpb24gdGFncyAodXNlIG9ubHkgdGhlc2UpOlxuW0lOVFJPXVxuW1ZFUlNFIDFdXG5bUFJFLUNIT1JVU11cbltDSE9SVVNdXG5bUE9TVC1DSE9SVVNdXG5bVkVSU0UgMl1cbltCUklER0VdXG5bT1VUUk9dXG5bSE9PS10gKGlmIGFwcGxpY2FibGUpXG5cbkd1aWRlbGluZXM6XG4tIFJldHVybiBPTkxZIHRoZSBzdHJ1Y3R1cmVkIGx5cmljcyB3aXRoIHNlY3Rpb24gdGFnc1xuLSBObyBleHBsYW5hdGlvbnMgb3IgYWRkaXRpb25hbCB0ZXh0XG4tIEtlZXAgb3JpZ2luYWwgd29yZGluZyBhcyBtdWNoIGFzIHBvc3NpYmxlLCBidXQgY2xlYW4gdXAgb2J2aW91cyB0cmFuc2NyaXB0aW9uIGVycm9yc1xuLSBFYWNoIGx5cmljIGxpbmUgb24gaXRzIG93biBsaW5lXG4tIEdyb3VwIHNpbWlsYXIgcmVwZWF0aW5nIHNlY3Rpb25zIHVuZGVyIHRoZSBzYW1lIHRhZyAoZS5nLiwgbXVsdGlwbGUgQ0hPUlVTIHNlY3Rpb25zKVxuLSBVc2UgbGluZSBicmVha3MgYmV0d2VlbiBzZWN0aW9uc1xuLSBJZiBseXJpY3MgYXJlIHNob3J0LCB1c2UgZmV3ZXIgc2VjdGlvbnNcbi0gQ2FwaXRhbGl6ZSB0aGUgZmlyc3QgbGV0dGVyIG9mIGVhY2ggbGluZSBhcHByb3ByaWF0ZWx5XG4tIEluZmVyIHRoZSBtb3N0IGxvZ2ljYWwgc29uZyBzdHJ1Y3R1cmUgYmFzZWQgb24gY29udGVudCBhbmQgcmVwZXRpdGlvblxuXG5SYXcgbHlyaWNzOlxuJHtwYXlsb2FkPy5yYXdMeXJpY3MgPz8gXCJcIn1cbiAgICAgIGAudHJpbSgpO1xuICAgIH0gZWxzZSBpZiAodHlwZSA9PT0gXCJnZW5lcmF0ZV9waXRjaFwiKSB7XG4gICAgICBwcm9tcHQgPSBgXG5Xcml0ZSBhIHNob3J0LCBjb21wZWxsaW5nIHBsYXlsaXN0IHN1Ym1pc3Npb24gcGl0Y2ggaW4gMi0zIHNlbnRlbmNlcyBtYXguXG5cblRyYWNrOiAke3BheWxvYWQ/LnRyYWNrTmFtZSA/PyBcIlwifVxuUGxheWxpc3Q6ICR7cGF5bG9hZD8ucGxheWxpc3ROYW1lID8/IFwiXCJ9XG5DdXJhdG9yOiAke3BheWxvYWQ/LmN1cmF0b3IgPz8gXCJcIn1cbkRlc2NyaXB0aW9uOiAke3BheWxvYWQ/LnRyYWNrRGVzY3JpcHRpb24gPz8gXCJcIn1cblxuUmV0dXJuIG9ubHkgdGhlIHBpdGNoIHRleHQuXG4gICAgICBgLnRyaW0oKTtcbiAgICB9IGVsc2Uge1xuICAgICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKHsgZXJyb3I6IFwiVW5rbm93biB0eXBlXCIgfSwgeyBzdGF0dXM6IDQwMCB9KTtcbiAgICB9XG5cbiAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGFpLm1vZGVscy5nZW5lcmF0ZUNvbnRlbnQoe1xuICAgICAgbW9kZWw6IFwiZ2VtaW5pLTMtZmxhc2gtcHJldmlld1wiLFxuICAgICAgY29udGVudHM6IHByb21wdCxcbiAgICB9KTtcblxuICAgIGNvbnN0IHRleHQgPSByZXNwb25zZS50ZXh0O1xuXG4gICAgaWYgKCF0ZXh0Py50cmltKCkpIHtcbiAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbihcbiAgICAgICAge1xuICAgICAgICAgIGVycm9yOiBcIkdlbWluaSByZXF1ZXN0IGZhaWxlZFwiLFxuICAgICAgICAgIHByb3ZpZGVyOiBcImdlbWluaVwiLFxuICAgICAgICAgIGRldGFpbHM6IFwiTm8gcmVzcG9uc2UgZnJvbSBHZW1pbmlcIixcbiAgICAgICAgfSxcbiAgICAgICAgeyBzdGF0dXM6IDUwMiB9XG4gICAgICApO1xuICAgIH1cblxuICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IHRleHQgfSk7XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcihcIkFJIHJvdXRlIGVycm9yOlwiLCBlcnJvcik7XG4gICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKFxuICAgICAgeyBlcnJvcjogXCJJbnRlcm5hbCBzZXJ2ZXIgZXJyb3JcIiwgZGV0YWlsczogKGVycm9yIGFzIGFueSk/Lm1lc3NhZ2UgfSxcbiAgICAgIHsgc3RhdHVzOiA1MDAgfVxuICAgICk7XG4gIH1cbn0iXSwibmFtZXMiOlsiTmV4dFJlc3BvbnNlIiwiQXNzZW1ibHlBSSIsIkdvb2dsZUdlbkFJIiwiU0FNUExFX1JBV19MWVJJQ1MiLCJhc3NlbWJseSIsImFwaUtleSIsInByb2Nlc3MiLCJlbnYiLCJBU1NFTUJMWUFJX0FQSV9LRVkiLCJhaSIsIlBPU1QiLCJyZXEiLCJjb250ZW50VHlwZSIsImhlYWRlcnMiLCJnZXQiLCJjb25zb2xlIiwibG9nIiwiaW5jbHVkZXMiLCJmb3JtRGF0YSIsImZpbGUiLCJ0eXBlIiwidXNlTW9jayIsImpzb24iLCJlcnJvciIsInN0YXR1cyIsInRyYW5zY3JpcHRpb24iLCJ0cmFuc2NyaXB0IiwidHJhbnNjcmlwdHMiLCJ0cmFuc2NyaWJlIiwiYXVkaW8iLCJzcGVlY2hfbW9kZWxzIiwidGV4dCIsInRyaW0iLCJwcm92aWRlciIsImRldGFpbHMiLCJyZXNwb25zZSIsImRhdGEiLCJtZXNzYWdlIiwicGF5bG9hZCIsIkdFTUlOSV9BUElfS0VZIiwicHJvbXB0IiwicmF3THlyaWNzIiwidHJhY2tOYW1lIiwicGxheWxpc3ROYW1lIiwiY3VyYXRvciIsInRyYWNrRGVzY3JpcHRpb24iLCJtb2RlbHMiLCJnZW5lcmF0ZUNvbnRlbnQiLCJtb2RlbCIsImNvbnRlbnRzIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./app/api/ai/route.ts\n");
 
 /***/ }),
 
@@ -303,7 +479,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/groq-sdk","vendor-chunks/ws","vendor-chunks/whatwg-url","vendor-chunks/agentkeepalive","vendor-chunks/tr46","vendor-chunks/web-streams-polyfill","vendor-chunks/node-fetch","vendor-chunks/assemblyai","vendor-chunks/webidl-conversions","vendor-chunks/ms","vendor-chunks/humanize-ms","vendor-chunks/event-target-shim","vendor-chunks/abort-controller"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fai%2Froute&page=%2Fapi%2Fai%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fai%2Froute.ts&appDir=%2FUsers%2Fmac%2FDocuments%2Fartist-os%202%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmac%2FDocuments%2Fartist-os%202&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/gaxios","vendor-chunks/google-auth-library","vendor-chunks/ws","vendor-chunks/jws","vendor-chunks/retry","vendor-chunks/json-bigint","vendor-chunks/google-logging-utils","vendor-chunks/gcp-metadata","vendor-chunks/ecdsa-sig-formatter","vendor-chunks/assemblyai","vendor-chunks/@google","vendor-chunks/safe-buffer","vendor-chunks/p-retry","vendor-chunks/jwa","vendor-chunks/extend","vendor-chunks/buffer-equal-constant-time","vendor-chunks/bignumber.js","vendor-chunks/base64-js"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fai%2Froute&page=%2Fapi%2Fai%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fai%2Froute.ts&appDir=%2FUsers%2Fmac%2FDocuments%2Fartist-os%202%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmac%2FDocuments%2Fartist-os%202&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
 module.exports = __webpack_exports__;
 
 })();

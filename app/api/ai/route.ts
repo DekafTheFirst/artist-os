@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AssemblyAI } from "assemblyai";
-import Groq from "groq-sdk";
+import { GoogleGenAI } from "@google/genai";
 import { SAMPLE_RAW_LYRICS } from "@/lib/data";
 
 const assembly = new AssemblyAI({
   apiKey: process.env.ASSEMBLYAI_API_KEY!,
 });
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY!,
-});
+const ai = new GoogleGenAI({});
 
 export async function POST(req: NextRequest) {
   const contentType = req.headers.get("content-type") || "";
@@ -88,10 +86,10 @@ export async function POST(req: NextRequest) {
 
     const { type, payload } = await req.json();
 
-    const apiKey = process.env.GROQ_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: "GROQ_API_KEY not set" },
+        { error: "GEMINI_API_KEY not set" },
         { status: 500 }
       );
     }
@@ -142,30 +140,29 @@ Return only the pitch text.
       return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }
 
-    const response = await groq.chat.completions.create({
-      model: "openai/gpt-oss-20b",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 1500,
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: prompt,
     });
 
-    if (!response.choices || response.choices.length === 0) {
+    const text = response.text;
+
+    if (!text?.trim()) {
       return NextResponse.json(
         {
-          error: "Groq request failed",
-          provider: "groq",
-          details: "No response from Groq",
+          error: "Gemini request failed",
+          provider: "gemini",
+          details: "No response from Gemini",
         },
         { status: 502 }
       );
     }
 
-    const text = response.choices[0].message.content ?? "";
-
     return NextResponse.json({ text });
   } catch (error) {
     console.error("AI route error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", details: (error as any)?.message },
       { status: 500 }
     );
   }
